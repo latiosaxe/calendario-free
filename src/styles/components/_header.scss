@@ -1,0 +1,68 @@
+$headerHeight: 70px;
+
+.header{
+    &__fix{
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        position: fixed;
+        background: $black;
+        border-bottom: 1px solid #777;
+        &>.level{
+            height: 100%;
+        }
+        & > .container{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        &__left{
+            display: flex;
+            align-items: center;
+            height: $headerHeight;
+            p{
+                margin-right: 15px;
+                display: inline-block;
+                vertical-align: middle;
+                &:first-of-type{
+                    margin-right: 30px;
+                }
+                &.logo{
+                    img{
+                        max-height: 40px;
+                        display: block;
+                    }
+                }
+                a{
+                    color: #fff;
+                    position: relative;
+                    &.router-link-active{
+                        color: $main-color;
+                        span{
+                            &:before{
+                                content: '';
+                                left: 50%;
+                                width: 10px;
+                                height: 2px;
+                                bottom: -5px;
+                                position: absolute;
+                                background: $main-color;
+                                transform: translateX(-50%);
+                            }
+                        }
+                    }
+                }
+            }
+        }   
+        &__right{
+            a{
+                color: $main-color;
+            }
+        }
+    }
+    &__space{
+        width: 100%;
+        height: $headerHeight;
+    }
+}

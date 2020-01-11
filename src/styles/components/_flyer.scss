@@ -1,0 +1,133 @@
+.flyer{
+    width: 100%;
+    position: relative;
+    padding-bottom: 150%;
+    background: center center no-repeat $black;
+    background-size: contain;
+    a{
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        color: #fff;
+        display: block;
+        position: absolute;
+    }
+    &__content{
+        z-index: 2;
+        left: 15px;
+        right: 15px;
+        bottom: 20px;
+        position: absolute;
+        h5{
+            line-height: 110%;
+            margin-bottom: 10px;
+        }
+        &__description{
+            width: 100%;
+            display: block;
+            overflow: hidden;
+            max-height: 70px;
+        }
+        &__date{
+            top: 15px;
+            right: 15px;
+            position: absolute;
+            font-family: $font_titles;
+            text-transform: capitalize;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 1);
+        }
+        &__metadata{
+            margin-top: 12px;
+            display: flex;
+            width: 100%;
+            border: 1px solid #777;
+            div{
+                flex: 1;
+                padding: 5px;
+                text-align: center;
+                border-right: 1px solid #777;
+                &:last-of-type{
+                    border-right: 0px solid #777;
+                }
+            }
+        }
+        h5{
+            font-size: 30px;
+        }
+    }
+    &:before{
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        content: '';
+        position: absolute;
+        background: rgba(0,0,0,0);
+        background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+        background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,0)), color-stop(100%, rgba(0,0,0,1)));
+        background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+        background: -o-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+        background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+        background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000', GradientType=0 );
+    }
+    &.onlyFlyer{
+        a{
+            pointer-events: none;
+            .flyer__content__date, .flyer__content{
+                display: none;
+            }
+        }
+        &:before{
+            display: none
+        }
+    }
+    @media (max-width: 768px) {
+        background: none !important;
+        padding: 0 10px;
+        a{
+            position: static;
+        }
+        .flyer__content__date, .flyer__content{
+            color: $black;
+            position: static;
+        }
+        .flyer__content__date{
+            text-shadow: none;
+        }
+        &:before{
+            display: none;
+        }
+    }
+}
+.flyer__full_width_text{
+    width: 100%;
+    margin-top: 20px;
+    p{
+        opacity: 0.8;
+        font-size: 3rem;
+        padding: 0 20px;
+        text-align: center;
+    }
+}
+
+.flyers__title{
+    font-family: $font_titles;
+}
+.flyers__filter{
+    &>span{
+        color: $black;
+        font-weight: 700;
+        margin-right: 5px;
+        // font-family: $font_titles;
+    }
+    &>span, &>.select{
+        display: inline-block;
+        vertical-align: middle;
+    }
+    @media (max-width: 768px) {
+        text-align: center !important;
+    }
+}

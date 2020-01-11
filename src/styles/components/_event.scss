@@ -1,0 +1,85 @@
+.event{
+    position: relative;
+    // max-height: calc( 100vh - 210px );
+    // overflow: auto;
+    &__image{
+        top: 0;
+        overflow: auto;
+        padding-top: 0;
+        // position: -webkit-sticky;
+        // position: sticky;
+    }
+    &__content{
+        padding-top: 0;
+        h1.title{
+            margin-bottom: 20px;
+            display: block;
+        }
+        .description{
+            display: block;
+            max-width: 100%;
+            white-space: pre-wrap;
+        }
+        .address{
+            width: 100%;
+            display: block;
+        }
+        &__metadata{
+            width: 100%;
+            display: flex;
+            &__element{
+                flex: 1;
+                padding: 10px;
+                border: 1px solid #000;
+                border-right: 0;
+                &:last-of-type{
+                    border-right: 1px solid #000;
+                }
+            }
+        }
+        &__age{
+            margin-top: 20px;
+        }
+    
+        &__footer{
+            margin-top: 20px;
+            .message-body{
+                border-radius: 0;
+                border-color: $black;
+                color: $black;
+                p{
+                    margin-bottom: 15px;
+                    &:last-of-type{
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+        &__cta{
+            margin: 20px 0 0;
+            &__shop{
+                margin-bottom: 20px;
+                a{
+                    width: 100%;
+                    display: block;
+                }
+            }
+            &__grid{
+                width: 100%;
+                display: flex;
+                margin: 0 auto;
+                max-width: 410px;   
+                align-items: center;
+                justify-content: space-around;
+                &>span{
+                    display: flex;
+                    justify-content: space-around;
+                    svg{
+                        margin-right: 2px;
+                    }
+                }
+            }
+        }
+    }
+}
+

@@ -1,0 +1,10 @@
+.select:not(.is-multiple):not(.is-loading)::after{
+    border-color: $black;
+}
+.button{
+    border-radius: 0;
+}
+.button.is-warning{
+    background: $main-color;
+    color: $black;
+}

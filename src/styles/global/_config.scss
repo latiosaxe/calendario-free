@@ -1,0 +1,36 @@
+body{
+    color: $black;
+    font-family: $font_principal;
+    *{
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+h1{
+    letter-spacing: 2px;
+    font-family: $font_titles;
+}
+a{
+    color: $main-color;
+}
+.site__content{
+    &>.section{
+        padding-top: 25px;
+    }
+    // a{
+    //     color: $black;
+    // }   
+}
+
+.columns.noPaddingTop{
+    .column{
+        padding-top: 0;
+    }
+}
+.pointer_none{
+    pointer-events: none;
+}
+
+// .hr_mobile{
+//     margin: 5px 0 20px;
+// }
