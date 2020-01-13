@@ -237,6 +237,10 @@ export const store = new Vuex.Store({
         index === self.findIndex((t) => ( t.address_country_code === event.address_country_code ))
       ).map(function(event) { return { country_code: event["address_country_code"], country: event["address_country"]  } });
     },
+  
+    userEvents (state, getters){
+      return (state.user ) ? getters.loadedEvents.filter(event => event.user_id == state.user.id ) : [];
+    },
     user (state) {
       return state.user
     },
