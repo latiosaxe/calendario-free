@@ -52,6 +52,12 @@
                 }
             }
         }
+        &__mobile_image{
+            display: none;
+            @media (max-width: 768px) {
+                display: block;
+            }
+        }
         h5{
             font-size: 30px;
         }

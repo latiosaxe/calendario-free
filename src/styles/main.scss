@@ -16,34 +16,39 @@
 .button.is-primary{
     background-color: $main-color;
 }
+.hero{
+    .hero-body{
+        position: relative;
+        &.is-warning{
+            background: $main-color;
+            a{
+                color: #FFF;
+            }
+        }
+        .container{
+            h1{
+                font-size: 4rem;
+            }
+            h1, h2, p{
+                color: $black !important;
+            }
+        }
+        .create_new{
+            top: 0;
+            right: 0;
+            position: absolute;
+            span{
+                margin-right: 7px;
+            }
+            @media (max-width: 768px) {
+                position: static;
+                margin-top: 10px;
+            }
+        }
+    }
 
-.hero-body{
-    position: relative;
-    background: $main-color;
-    a{
-        color: #FFF;
-    }
-    .container{
-        h1{
-            font-size: 4rem;
-        }
-        h1, h2, p{
-            color: $black !important;
-        }
-    }
-    .create_new{
-        top: 0;
-        right: 0;
-        position: absolute;
-        span{
-            margin-right: 7px;
-        }
-        @media (max-width: 768px) {
-            position: static;
-            margin-top: 10px;
-        }
-    }
 }
+
 
 .datepicker{
     .vue-input{

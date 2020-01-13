@@ -22,7 +22,6 @@ export default {
     name: 'Flyer',
     props:[ 'event', 'onlyFlyer' ],
     mounted(){
-        console.log(this.onlyFlyer);
     },
     methods: {
        getmIage(){

@@ -12,6 +12,14 @@
   color: #0b122f;
 }
 
+.navbar-item.has-dropdown.is-active .navbar-link, .navbar-item.has-dropdown:focus .navbar-link, .navbar-item.has-dropdown:hover .navbar-link {
+  background: #0b122f;
+}
+
+.navbar-link:not(.is-arrowless)::after {
+  border-color: #ffe200;
+}
+
 body {
   color: #0b122f;
   font-family: "Roboto", sans-serif;
@@ -115,8 +123,12 @@ a {
           transform: translateX(-50%);
 }
 
-.header__fix__right a {
+.header__fix__right .navbar-link {
   color: #ffe200;
+}
+
+.header__fix__right .navbar-dropdown .navbar-item, .header__fix__right .navbar-dropdown .navbar-item a {
+  color: #0b122f;
 }
 
 .header__space {
@@ -200,6 +212,16 @@ a {
 
 .flyer__content__metadata div:last-of-type {
   border-right: 0px solid #777;
+}
+
+.flyer__content__mobile_image {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .flyer__content__mobile_image {
+    display: block;
+  }
 }
 
 .flyer__content h5 {
@@ -405,35 +427,38 @@ a {
   background-color: #ffe200;
 }
 
-.hero-body {
+.hero .hero-body {
   position: relative;
+}
+
+.hero .hero-body.is-warning {
   background: #ffe200;
 }
 
-.hero-body a {
+.hero .hero-body.is-warning a {
   color: #FFF;
 }
 
-.hero-body .container h1 {
+.hero .hero-body .container h1 {
   font-size: 4rem;
 }
 
-.hero-body .container h1, .hero-body .container h2, .hero-body .container p {
+.hero .hero-body .container h1, .hero .hero-body .container h2, .hero .hero-body .container p {
   color: #0b122f !important;
 }
 
-.hero-body .create_new {
+.hero .hero-body .create_new {
   top: 0;
   right: 0;
   position: absolute;
 }
 
-.hero-body .create_new span {
+.hero .hero-body .create_new span {
   margin-right: 7px;
 }
 
 @media (max-width: 768px) {
-  .hero-body .create_new {
+  .hero .hero-body .create_new {
     position: static;
     margin-top: 10px;
   }

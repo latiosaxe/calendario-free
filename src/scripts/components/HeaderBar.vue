@@ -16,10 +16,29 @@
                     </p>
                 </nav>
                 <ul class="header__fix__right">
-                    <li class="level-item has-text-centered">
-                        <router-link to="/login">                      
-                            <i class="fas fa-user"></i>
-                        </router-link> 
+                     <li>
+                         <div id="navbarBasicExample" class="navbar-menu">
+                            <div class="navbar-start">
+                                <div class="navbar-item has-dropdown is-hoverable">
+                                    <a class="navbar-link">
+                                        <i class="fas fa-user"></i>
+                                    </a>
+
+                                    <div class="navbar-dropdown">
+                                        <a v-if="user" class="navbar-item">
+                                            <router-link to="/usuario">Mi perfil</router-link> 
+                                        </a>
+                                        <a v-else class="navbar-item">
+                                            <router-link to="/login">Crear cuenta</router-link> 
+                                        </a>
+                                        <hr v-if="user" class="navbar-divider">
+                                        <a v-if="user" class="navbar-item">
+                                            Salir
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -31,7 +50,11 @@
 
 <script>
 export default {
-
+    computed:{
+        user(){
+            return this.$store.getters.user
+        }
+    }
 }
 </script>
 

@@ -8,3 +8,11 @@
     background: $main-color;
     color: $black;
 }
+
+.navbar-item.has-dropdown.is-active .navbar-link, .navbar-item.has-dropdown:focus .navbar-link, .navbar-item.has-dropdown:hover .navbar-link{
+    background: $black;
+}
+
+.navbar-link:not(.is-arrowless)::after{
+    border-color: $main-color;
+}

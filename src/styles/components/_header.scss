@@ -56,8 +56,13 @@ $headerHeight: 70px;
             }
         }   
         &__right{
-            a{
+            .navbar-link{
                 color: $main-color;
+            }
+            .navbar-dropdown{
+                .navbar-item, .navbar-item a{
+                    color: $black;
+                }
             }
         }
     }

@@ -30,8 +30,9 @@
               <h1 class="title">{{ event.name }}</h1>
               <p class="description" v-if="event.description" v-html="event.description"></p>
               
-              <hr v-if="event.address">
-              <p class="address has-text-centered" v-if="event.address"><strong>Dirección:</strong> {{ event.address }}</p>
+              <hr v-if="event.address_full">
+              <p class="address has-text-centered"><strong>Dirección:</strong> {{ event.address_full }}</p>
+              <p class="address has-text-centered">{{ event.address_city }}, {{ event.address_country }}</p>
               <hr>
 
               <div class="event__content__metadata">
@@ -109,6 +110,14 @@
                 </social-sharing>
               </div>
 
+              <div v-if="user && user.id == event.user_id" class="has-text-right">
+                <hr>
+                <p style="margin-top: 20px;">
+                    <router-link :to="`/eventos/${event.slug}/editar`" class="button is-link is-light">Editar evento</router-link> 
+                </p>
+                <p class="help">Solo el creador del evento puede editarlo</p>
+              </div>
+
             </div>
           </div>
         </div>
@@ -144,7 +153,10 @@ import Flyer from './Flyer.vue'
     computed: {
       event () {
         return this.$store.getters.loadedEvent(this.slug);
-      }
+      },
+      user(){
+        return this.$store.getters.user
+      } 
     },
     methods:{
       getImage(){

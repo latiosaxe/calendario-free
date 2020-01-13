@@ -1,13 +1,13 @@
 <template>
     <div>
-        <section class="hero is-light">
+        <section class="hero is-warning">
             <div class="hero-body">
                 <div class="container">
                     <h1 class="title">Eventos</h1>
                     <h2 class="subtitle" style="margin-bottom: 0">
                         <p>Habilita <strong>tu locación</strong> para mostrarte los eventos mas cerca de ti.</p>
                     </h2>
-                    <p class="create_new">
+                    <p v-if="this.$store.getters.user" class="create_new">
                         <router-link to="/evento/nuevo">
                             <button class="button is-black">
                                 <span>Crear Evento</span> <i class="fas fa-calendar-plus"></i>
@@ -119,7 +119,7 @@ export default {
     },
     mounted(){
         
-        console.log(this.pastEvents);
+        console.log(this.$store.getters.user);
 
         // if (navigator.geolocation) {
         //     navigator.geolocation.getCurrentPosition(
