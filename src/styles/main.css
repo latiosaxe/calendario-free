@@ -51,6 +51,10 @@ a {
   pointer-events: none;
 }
 
+hr.black {
+  background-color: #0b122f;
+}
+
 .header__fix {
   top: 0;
   left: 0;
@@ -417,6 +421,61 @@ a {
 
 .event__content__cta__grid > span svg {
   margin-right: 2px;
+}
+
+.event__comments {
+  width: 100%;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid #0b122f;
+}
+
+.event__comments__list {
+  margin-top: 25px;
+}
+
+.event__comments__list__single {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 8px;
+  padding: 11px 10px 9px 14px;
+  border: 1px solid #f1f1f1;
+  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
+}
+
+.event__comments__list__single__user {
+  width: 60px;
+}
+
+.event__comments__list__single__user__wrapper {
+  width: 100%;
+}
+
+.event__comments__list__single__user__wrapper__avatar {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 50%;
+  padding-bottom: 100%;
+  background: center center no-repeat;
+  background-size: cover;
+}
+
+.event__comments__list__single__user__wrapper__username {
+  font-weight: bold;
+  text-align: center;
+}
+
+.event__comments__list__single__comment {
+  margin-left: 25px;
+}
+
+.event__comments__list__single:nth-of-type(2n) {
+  background: #fbfbfb;
 }
 
 .section__container {

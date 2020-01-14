@@ -12,14 +12,14 @@ Vue.component('timepicker', Timepicker);
 Vue.component('datetime-picker', DatetimePicker);
 
 
-
-
 export const store = new Vuex.Store({
   state: {
     loadedEvents: [],
+    eventComments: [],
     user: null,
     loading: false,
-    error: null
+    error: null,
+    usersLoaded:[],
   },
   mutations: {
     setLoadedEvents (state, payload) {
@@ -32,8 +32,30 @@ export const store = new Vuex.Store({
     createEvent (state, payload) {
       state.loadedEvents.push(payload)
     },
+    setEventComments(state, payload) {
+      let res = payload;
+      if(res.length > 0){
+        res.forEach(element => {
+          element.id = Object.getOwnPropertyNames(element).sort()[0];
+        });
+      }
+      state.eventComments = res;
+    },
     setUser (state, payload) {
       state.user = payload
+      firebase.database().ref('users/' + state.user.id).once('value')
+      .then((data) => {
+        const obj = data.val()
+        state.user.name = obj.name;
+        state.user.username = obj.username;
+        state.user.profile_pic = obj.profile_pic;
+      })
+      .catch(
+        (error) => {
+          console.log(error)
+          commit('setLoading', false)
+        }
+      )
     },
     setLoading (state, payload) {
       state.loading = payload
@@ -43,6 +65,33 @@ export const store = new Vuex.Store({
     },
     clearError (state) {
       state.error = null
+    },
+    checkUserById (state, payload){
+      // console.log("CheckUserById", payload, state.usersLoaded)
+      let user = state.usersLoaded.find((event) => {
+        // console.log("----", event);
+        return event.id === payload
+      })
+      // console.log("User", user);
+      if(!user){
+        firebase.database().ref('users/' + payload).once('value')
+        .then((data) => {
+          const obj = data.val()
+          let newUser = {}
+          newUser.id = payload;
+          newUser.name = obj.name;
+          newUser.username = obj.username;
+          newUser.profile_pic = obj.profile_pic;
+          // console.log("NEW USER", newUser);
+          state.usersLoaded.push( newUser )
+        })
+        .catch(
+          (error) => {
+            console.log(error)
+          }
+        )
+      }
+      // console.log(state.usersLoaded);
     }
   },
   actions: {
@@ -135,62 +184,44 @@ export const store = new Vuex.Store({
         })
       // // Reach out to firebase and store it sadf
     },
-    signUserUp ({commit}, payload) {
-      commit('setLoading', true)
-      commit('clearError')
-      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
-        .then(
-          user => {
-            commit('setLoading', false)
-            const newUser = {
-              id: user.uid,
-              registeredEvents: []
-            }
-            commit('setUser', newUser)
-          }
-        )
-        .catch(
-          error => {
-            commit('setLoading', false)
-            commit('setError', error)
-            console.log(error)
-          }
-        )
+    createComment ({commit, getters}, payload) {
+      let newComment = payload;
+      console.log("New comment", newComment);
+      firebase.database().ref('comments').push(newComment)
+      .then((data) => {
+        // const key = data.key
+        // event.id = key
+        // commit('createEvent', event)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
     },
-    signUserIn ({commit}, payload) {
-      commit('setLoading', true)
-      commit('clearError')
-      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
-        .then(
-          user => {
-            commit('setLoading', false)
-            const newUser = {
-              id: user.uid,
-              registeredEvents: []
-            }
-            commit('setUser', newUser)
-          }
-        )
-        .catch(
-          error => {
-            commit('setLoading', false)
-            commit('setError', error)
-            console.log(error)
-          }
-        )
+    eventComments({commit, getters}, payload){
+      firebase.database().ref('comments').orderByChild("event").equalTo(payload).on("value", snapshot => {
+        let array = [];
+        let obj = snapshot.val();
+        Object.keys(obj).forEach((key) => {
+          array.push({[key]: obj[key]});
+        });
+        commit('setEventComments', array)
+      });
+    },
+    getUserById({commit, getters}, payload){
+      commit('checkUserById', payload)
     },
     autoSignIn ({commit}, payload) {
-      commit('setUser', {id: payload.uid, registeredEvents: []})
+      commit('setUser', {id: payload.uid, username: payload.username, name: payload.name, profile_pic: payload.profile_pic})
     },
     logout ({commit}) {
       firebase.auth().signOut()
       commit('setUser', null)
-    },
-    clearError ({commit}) {
-      commit('clearError')
     }
   },
   getters: {
+    setEventComments(state){
+      return state.eventComments;
+    },
     loadedEvent (state) {
       return (eventSlug) => {
         return state.loadedEvents.find((event) => {
@@ -243,6 +274,31 @@ export const store = new Vuex.Store({
     },
     user (state) {
       return state.user
+    },
+    updateUserInfo(state){
+      return (userInfo) => {
+        firebase.database().ref('users/' + state.user.id).set({
+          username: (userInfo.username) ? userInfo.username : '',
+          name: (userInfo.name) ? userInfo.name : '',
+          profile_pic: (userInfo.profile_pic) ? userInfo.profile_pic : ''
+          // Add more stuff here
+        }, function(error) {
+          if (error) {
+            console.log(error)
+          } else {
+            state.user.username= (userInfo.username) ? userInfo.username : '',
+            state.user.name= (userInfo.name) ? userInfo.name : '',
+            state.user.profile_pic= (userInfo.profile_pic) ? userInfo.profile_pic : ''
+          }
+        });
+      }
+    },
+    getUserById(state){
+      return (user_id) =>{
+        return state.usersLoaded.find((event) => {
+          return event.id === user_id
+        })
+      }
     },
     loading (state) {
       return state.loading

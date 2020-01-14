@@ -25,6 +25,7 @@ new Vue({
   router,
   created: function () {
     firebase.initializeApp(config)
+    firebase.auth().languageCode = 'es';
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.$store.dispatch('autoSignIn', user)

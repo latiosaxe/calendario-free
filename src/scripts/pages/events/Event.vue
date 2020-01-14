@@ -110,6 +110,8 @@
                 </social-sharing>
               </div>
 
+              <Comments  v-if="user" :slug="slug" :user="user"/>
+
               <div v-if="user && user.id == event.user_id" class="has-text-right">
                 <hr>
                 <p style="margin-top: 20px;">
@@ -128,11 +130,13 @@
 
 <script>
 import Flyer from './Flyer.vue'
+import Comments from '../comments/Comments.vue'
 
  export default {
     props: ['slug'],
     components: {
-        Flyer
+        Flyer,
+        Comments
     },
     data(){
       return {

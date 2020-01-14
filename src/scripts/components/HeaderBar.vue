@@ -29,10 +29,10 @@
                                             <router-link to="/usuario">Mi perfil</router-link> 
                                         </a>
                                         <a v-else class="navbar-item">
-                                            <router-link to="/login">Crear cuenta</router-link> 
+                                            <router-link to="/login">Ingresar</router-link> 
                                         </a>
                                         <hr v-if="user" class="navbar-divider">
-                                        <a v-if="user" class="navbar-item">
+                                        <a v-if="user" class="navbar-item" @click.prevent="logout()">
                                             Salir
                                         </a>
                                     </div>
@@ -49,10 +49,26 @@
 </template>
 
 <script>
+import firebase from 'firebase';
+
 export default {
     computed:{
         user(){
             return this.$store.getters.user
+        },
+        userData(){
+            return this.$store.getters.userData
+        }
+    },
+    methods: {
+        logout(){
+            console.log("LOGOUT");
+            this.$store.dispatch('logout')
+            // firebase.auth().signOut().then(function() {
+            //     this.$router.push('/eventos');
+            // }).catch(function(error) {
+            // // An error happened.
+            // });
         }
     }
 }
