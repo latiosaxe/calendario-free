@@ -18,7 +18,7 @@
             </div>
         </section>
         <div class="section__container">
-            <div class="container" v-if="nextEvents.length > 0">
+            <div class="container" v-if="eventsDisplayed.length > 0">
                 <div class="columns is-vcentered">
                     <div class="column is-hidden-mobile">
                         <div class=flyers__title>
@@ -86,7 +86,10 @@ export default {
       },
       eventsDisplayed(){
           let res = [];
+          console.log("- PAST", this.filters.past);
+          console.log("- NEXT", this.nextEvents);
           (this.filters.past) ? res = this.pastEvents : res = this.nextEvents;
+          console.log("- res", res);
           if( this.filters.country == 'CLOSEST' ){
               let distance = 0;
               res = res.filter(function(event) {

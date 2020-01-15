@@ -23,9 +23,9 @@
             <div class="columns">
               <div class="column">
                 <div class="field">
-                  <label for="" class="label">Dirección</label>
+                  <label for="" class="label">Dirección <span>*</span></label>
                   <div class="control">
-                    <input type="text" placeholder="Monumento a la Revolución" v-model="event.address_full" class="input"/>
+                    <input type="text" placeholder="Monumento a la Revolución" v-model="event.address_full" class="input" required/>
                   </div>
                 </div>
               </div>
@@ -96,7 +96,7 @@
                 <div class="field">
                   <label class="label">Descripción</label>
                   <div class="control">
-                    <textarea class="textarea" placeholder="El mejor puto evento..." v-model="event.description"></textarea>
+                    <vue-editor v-model="event.description" required="required"></vue-editor>
                   </div>
                 </div>
               </div>
@@ -126,12 +126,14 @@
                 <div class="field">
                   <div class="label">Día del Evento</div>
                   <div class="control" style="position: relative">
-                    <datepicker :value="time_init"
+
+                    <Datepicker :value="time_init"></Datepicker>
+                    <!-- <datepicker :value="time_init"
                         @input="log"
                         :min="time_init"
                         :dayStr="dayStr"
                         :scrollbarProps="{isMobile: false}"
-                        :popperProps="defaultPopperProps"/>
+                        :popperProps="defaultPopperProps"/> -->
                   </div>
                 </div>
               </div>
@@ -153,6 +155,18 @@
               </div>
             </div>
 
+            
+            <div class="columns">
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Top 4:</label>
+                        <div class="control">
+                            <vue-editor v-model="event.top_four" required="required"></vue-editor>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="columns">
               <div class="column">
                 <div class="field">
@@ -171,7 +185,7 @@
                 <div class="field is-grouped" style="justify-content: flex-end;">
                   <div class="control">
                      <button class="button is-warning is-large">
-                      <span>Crear Evento</span>
+                      <span>{{ (edit)?'Editar evento':'Crear Evento' }}</span>
                       <span class="icon is-small">
                         <i class="fas fa-check"></i>
                       </span>
@@ -183,16 +197,24 @@
   </div>
 </template>
 
+<script src="https://unpkg.com/vuejs-datepicker@1.6.2/dist/locale/translations/es.js"></script>
 <script>
+import Datepicker from 'vuejs-datepicker';
+import { VueEditor } from "vue2-editor";
+
 export default {
-    props: ['event'],
+    props: ['event', 'edit'],
+    components: {
+      Datepicker,
+      VueEditor
+    },
     mounted(){
         console.log(this.event);
     },
     data(){
         return{
             dayStr: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-            time_init: `${new Date().getFullYear()}-${(new Date().getMonth()+1)}-${new Date().getDate()}`,
+            time_init: new Date().toString(),
             address: '',
             address_siggestions: [],
             showSuggestions: true,

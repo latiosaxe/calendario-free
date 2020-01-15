@@ -24,6 +24,7 @@
     "vue-router": "^2.8.1",
     "vue-social-sharing": "^2.4.7",
     "vue2-editor": "^2.10.2",
+    "vuejs-datepicker": "^1.6.2",
     "vuex": "^2.5.0",
     "weekstart": "^1.0.1"
   },

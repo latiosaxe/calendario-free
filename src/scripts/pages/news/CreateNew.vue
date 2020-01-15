@@ -70,9 +70,9 @@ export default {
     data(){
         return{
             newData: {
-                title: 'CAYU desvinculado de God Level.',
+                title: '',
                 content: '',
-                image: 'https://instagram.fmex8-2.fna.fbcdn.net/v/t51.2885-15/e35/80554703_2599411056780274_7670411658469909688_n.jpg?_nc_ht=instagram.fmex8-2.fna.fbcdn.net&_nc_cat=110&_nc_ohc=mmtrqmDzMfQAX8ArAA2&oh=37ec706d51fd48f75a443adeff07a846&oe=5ED57378'
+                image: ''
             }
         }
     },

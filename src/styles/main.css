@@ -409,6 +409,7 @@ hr.black {
 .event__content .address {
   width: 100%;
   display: block;
+  margin-top: 20px;
 }
 
 .event__content__metadata {
@@ -700,7 +701,7 @@ hr.black {
   }
 }
 
-.datepicker .vue-input {
+.vdp-datepicker input {
   -webkit-appearance: none;
   -webkit-box-align: center;
       -ms-flex-align: center;

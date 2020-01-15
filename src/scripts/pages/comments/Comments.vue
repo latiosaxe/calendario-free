@@ -55,7 +55,7 @@ export default {
     return {
       show_new: true,
       newComment: {
-        message: 'En mi opnion este evento será una maravilla.'
+        message: ''
       }
     }
   },

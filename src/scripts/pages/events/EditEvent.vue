@@ -12,7 +12,7 @@
     </section>
     <div class="section__container">
         <div class="container">
-          <form v-if="event" @submit.prevent="validateForm()">
+          <form class="mobile_helper" v-if="event" @submit.prevent="validateForm()">
             <div v-if="event.code == 0">
               <p class="has-text-centered">{{event.error}}</p>
               <p style="margin-top: 10px" class="has-text-centered"><router-link to="/login" class="button is-warning"><span>Ingresa</span></router-link></p>
@@ -20,7 +20,7 @@
             <div v-else-if="event.code == 1">
               <p class="has-text-centered">{{event.error}}</p>
             </div>
-            <EventForm v-else :event="event"/>
+            <EventForm v-else :event="event" :edit="true"/>
           </form>
           <div v-else class="container flyer__full_width_text">
             <p>Cargando</p>
@@ -75,6 +75,7 @@ export default {
         address_state: '',
         address_lat: false,
         address_long: false,
+        top_four: ''
       }
     }
   },

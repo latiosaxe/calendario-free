@@ -16,8 +16,8 @@
               </ul>
             </nav>
           </div>
-          <div class="column has-text-right">
-            <a v-if="event.tickets" :href="event.tickets" class="button is-warning is-medium">Comprar boletos</a>
+          <div class="column has-text-right ">
+            <a v-if="event.tickets" :href="event.tickets" class="button is-warning is-medium mobile_full_width">Comprar boletos</a>
           </div>
         </div>
       
@@ -31,8 +31,11 @@
               <p class="description" v-if="event.description" v-html="event.description"></p>
               
               <hr v-if="event.address_full">
-              <p class="address has-text-centered"><strong>Dirección:</strong> {{ event.address_full }}</p>
-              <p class="address has-text-centered">{{ event.address_city }}, {{ event.address_country }}</p>
+              <div v-if="event.address_full" class="address">
+                <p class="has-text-centered"><strong>Dirección:</strong> {{ event.address_full }}</p>
+                <p class="has-text-centered">{{ event.address_city }}, {{ event.address_country }}</p>
+              </div>
+              
               <hr>
 
               <div class="event__content__metadata">
@@ -79,7 +82,17 @@
                 <div class="event__content__cta__shop">
                   <a v-if="event.tickets" :href="event.tickets" class="button is-warning is-medium">Comprar boletos</a>
                 </div>
-                <social-sharing :url="url"
+
+
+                <p v-if="isMobile" class="button is-dark mobile_full_width" @click="mobileShare()">
+                    <span class="icon is-small">
+                        <i class="fas fa-share-alt"></i>
+                    </span>
+                    <span>Compartir</span>
+                </p>
+
+
+                <social-sharing v-else :url="url"
                   :title="event.title"
                   :description="event.description"
                   :quote="`CalendarioFree te invita a ${event.title}. ${event.description}`"
@@ -156,6 +169,7 @@ import Comments from '../comments/Comments.vue'
     data(){
       return {
         url: '',
+        isMobile: false,
         styles: {
           top: 0,
           width: '100%',
@@ -166,6 +180,8 @@ import Comments from '../comments/Comments.vue'
       }
     },
     mounted(){
+
+      (window.innerWidth > 768) ? this.isMobile = false : this.isMobile = true
       this.url = window.location.href; 
       this.footerHeight = document.getElementById('footer').clientHeight;
     },
@@ -200,16 +216,31 @@ import Comments from '../comments/Comments.vue'
           }
         }
         // console.log(this.styles);
-      }
-    },
-    created () {
-      if(window.innerWidth > 768){
-        window.addEventListener('scroll', this.handleScroll);
-      }
-    },
-    destroyed () {
-      if(window.innerWidth > 768){
-        window.removeEventListener('scroll', this.handleScroll);
+      },
+      created () {
+        if(window.innerWidth > 768){
+          window.addEventListener('scroll', this.handleScroll);
+        }
+      },
+      destroyed () {
+        if(window.innerWidth > 768){
+          window.removeEventListener('scroll', this.handleScroll);
+        }
+      },
+      mobileShare(){
+        if (navigator.share) {
+            navigator.share({
+                title: this.event.name,
+                text: this.event.description,
+                url: this.url,
+                image: this.event.image,
+            }).then(() => {
+                console.log('Thanks for sharing!');
+            })
+            .catch(console.error);
+        } else {
+            // fallback
+        }
       }
     }
   }

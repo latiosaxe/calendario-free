@@ -135,6 +135,7 @@ export const store = new Vuex.Store({
               address_city: obj[key].address_city,
               tickets: obj[key].tickets,
               user_id: obj[key].user_id,
+              top_four: obj[key].top_four,
             })
           }
           commit('setLoadedEvents', events)
@@ -168,7 +169,8 @@ export const store = new Vuex.Store({
         address_country_code: payload.address_country_code,
         address_city: payload.address_city,
         tickets: payload.tickets,
-        user_id: payload.user_id
+        user_id: payload.user_id,
+        top_four: payload.top_four,
       }
       firebase.database().ref('events').push(event)
         .then((data) => {
@@ -303,19 +305,19 @@ export const store = new Vuex.Store({
     },
     loadedEvents (state) {
       return state.loadedEvents.sort((eventA, eventB) => {
-        return ( new Date(eventA.date + ' 12:00') - new Date(eventB.date + ' 12:00'))
+        return ( new Date(eventA.date) - new Date(eventB.date))
       })
     },
     
     getNextEvents(state, getters){
       let now = new Date();
       now.setDate(now.getDate()-1); //PLUS ONE DAY
-      return getters.loadedEvents.filter(event => new Date(event.date + ' 12:00') >= now );
+      return getters.loadedEvents.filter(event => new Date(event.date) >= now );
     },
     getPastEvents (state, getters){
       let now = new Date();
       now.setDate(now.getDate()-1); //MINUS ONE DAY
-      return getters.loadedEvents.filter(event => new Date(event.date + ' 12:00') < now );
+      return getters.loadedEvents.filter(event => new Date(event.date) < now );
     },
     getCountryEvents(state, getters){
       return getters.loadedEvents.filter((event, index, self) =>

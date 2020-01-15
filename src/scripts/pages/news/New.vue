@@ -17,7 +17,14 @@
 
                     <div class="news__single__share">
 
-                        <social-sharing :url="url"
+                        <p v-if="isMobile" class="button is-dark mobile_full_width" @click="mobileShare()">
+                            <span class="icon is-small">
+                                <i class="fas fa-share-alt"></i>
+                            </span>
+                            <span>Compartir</span>
+                        </p>
+
+                        <social-sharing v-else :url="url"
                         :title="singleNew.title"
                         :description="singleNew.description"
                         :quote="`CalendarioFree - ${singleNew.title}`"
@@ -61,7 +68,21 @@
 export default {
     props: ['slug'],
     name: 'News',
-    
+    metaInfo () {
+      return {
+        title: (this.singleNew) ? this.singleNew.title : 'CalendarioFree - Noticias freestyle',
+        meta: [
+          { name: 'description', content: (this.singleNew) ? this.singleNew.content : '' },
+          { name: 'keywords', content: (this.singleNew) ? `${this.singleNew.title}, noticias freestyle, calendario freestyle` : 'noticias freestyle, calendario freestyle' },
+
+          { name: 'og:url', content: this.url },
+          { name: 'og:title', content:  (this.singleNew) ? this.singleNew.title : 'CalendarioFree - Noticias' },
+          { name: 'og:description', content: (this.singleNew) ? this.singleNew.content : ''  },
+          { name: 'og:image', content: (this.singleNew) ? this.singleNew.image : ''  },
+          { name: 'twitter:card', content: 'summary' }
+        ]
+      }
+    },
     computed: {
         singleNew(){
             return this.$store.getters.loadedNew(this.slug);
@@ -71,11 +92,30 @@ export default {
         return {
             loading: true,
             url: '',
+            isMobile: false
         }
     },
     mounted(){
+        (window.innerWidth > 768) ? this.isMobile = false : this.isMobile = true
         this.url = window.location.href; 
         this.$store.dispatch('loadNews');
+    },
+    methods:{
+        mobileShare(){
+            if (navigator.share) {
+                navigator.share({
+                    title: this.singleNew.title,
+                    text: this.singleNew.content,
+                    url: this.url,
+                    image: this.singleNew.image,
+                }).then(() => {
+                    console.log('Thanks for sharing!');
+                })
+                .catch(console.error);
+            } else {
+                // fallback
+            }
+        }
     }
 }
 </script>

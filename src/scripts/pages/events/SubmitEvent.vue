@@ -64,6 +64,7 @@ export default {
         address_state: '',
         address_lat: false,
         address_long: false,
+        top_four: '',
       }
     }
   },
