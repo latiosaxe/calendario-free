@@ -242,8 +242,8 @@ export default {
             return ( screen.width <= 760 ) ? true : false ;
         },
         replaceCountry(){
-            this.event.address_country.replace('República Bolivariana De Venezuela', 'Venezuela');
-            this.event.address_country.replace('República de Chile', 'Chile');
+            this.event.address_country.replace('República Bolivariana De Venezuela', 'Venezuela')
+                                      .replace('República de Chile', 'Chile');
             this.event.date = this.time_init;
         }
     },

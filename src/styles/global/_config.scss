@@ -7,7 +7,7 @@ body{
     }
 }
 h1{
-    letter-spacing: 2px;
+    // letter-spacing: 2px;
     font-family: $font_titles;
 }
 a{
@@ -35,6 +35,36 @@ a{
 hr.black{
     background-color: $black;
 }
+
+.navbar-burger{
+    color: $main-color;
+    &:hover {
+        color: $main-color;
+    }
+}
+
+@media (max-width: 768px) {
+    .container{
+        overflow: hidden;
+        // overflow-y: auto;
+        // overflow-x: hidden;
+    }
+    .mobile_full_width{
+        width: 100%;   
+    }
+    .mobile_margin_top_20{
+        margin-top: 20px;
+    }
+    .mobile_helper{
+        padding: 0 20px;
+    }
+    .breadcrumb{
+        margin-top: 10px;
+    }
+}
+
+
+
 // .hr_mobile{
 //     margin: 5px 0 20px;
 // }

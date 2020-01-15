@@ -31,7 +31,7 @@
                             </div>
                             <div class="columns">
                                 <div class="column has-text-right">
-                                    <button class="button is-dark" type="submit">Completar información de usuario</button>
+                                    <button class="button is-black mobile_full_width" type="submit"><span>Completar información de usuario</span><span class="icon is-small"><i class="fas fa-caret-right"></i></span></button>
                                 </div>
                             </div>
                         </form>
@@ -44,7 +44,7 @@
                                     <div class="field">
                                         <label class="label">Usuario</label>
                                         <div class="control">
-                                            <input v-model="userInfo.username" class="input" placeholder="latiosaxe" required/>
+                                            <input v-model="userInfo.username" class="input" placeholder="latiosaxe" required maxlength="14"/>
                                         </div>
                                         <p class="help">Para poder comentar es necesario tener antes configurado un nombre de usuario. No agregues @ al principio.</p>
                                     </div>
@@ -71,7 +71,7 @@
                             </div>
                             <div class="columns">
                                 <div class="column has-text-right">
-                                    <button class="button is-dark" type="submit">Completar información de usuario</button>
+                                    <button class="button is-black mobile_full_width" type="submit"><span>Completar información de usuario</span><span class="icon is-small"><i class="fas fa-caret-right"></i></span></button>
                                 </div>
                             </div>
                         </form>
@@ -83,16 +83,25 @@
                 </div>
             </div>
         </section>
-        <div class="section__container">
-            <div class="container" v-if="userEvents.length > 0">
-                <p class="title">Estos son los eventos que haz creado.</p>
-                <div class="columns is-multiline">
-                    <div class="column is-one-third" v-for="event in userEvents" :key="event.id">
-                        <Flyer :event="event"  :onlyFlyer="false"/>
+        <div class="section__container mobile_helper">
+            <template v-if="userEvents">
+                <div class="container" v-if="userEvents.length > 0">
+                    <p class="title">Estos son los eventos que haz creado.</p>
+                    <div class="columns is-multiline">
+                        <div class="column is-one-third" v-for="event in userEvents" :key="event.id">
+                            <Flyer :event="event"  :onlyFlyer="false"/>
+                        </div>
                     </div>
                 </div>
-            </div>
-
+                <template v-else>
+                    <div class="container">
+                        <div class="flyer__full_width_text">
+                            <p>No tienes ningun evento creado.</p>
+                        </div>
+                        <p class="has-text-centered">Si sabes de un evento puedes crearlo <router-link class="button is-warning mobile_margin_top_20" to="/evento/nuevo">dando click aquí</router-link></p>
+                    </div>
+                </template>
+            </template>
             <div v-else class="container flyer__full_width_text">
                 <p>Cargando</p>
             </div>
@@ -119,7 +128,7 @@ export default {
             return user
         },
         userEvents () {
-            return this.$store.getters.userEvents;
+            return this.$store.getters.userEvents || false;
         },
     },
     data(){

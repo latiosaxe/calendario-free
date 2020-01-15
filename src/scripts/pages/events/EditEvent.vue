@@ -5,7 +5,7 @@
             <div class="container">
                 <h1 class="title">Editar evento</h1>
                 <h2 class="subtitle">
-                    Sólo tu puedes editar este evento, si requieres soporte envia un correo a <a href="mailto:latiosaxe@gmail.com">latiosaxe@gmail.com</a>
+                    Sólo tu puedes editar este evento, si tienes alguna duda <a href="https://www.instagram.com/60segundosfreestyle/" target="_blank">mandamos un mensaje por IG</a>
                 </h2>
             </div>
         </div>

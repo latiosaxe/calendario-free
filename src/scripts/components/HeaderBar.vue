@@ -5,7 +5,8 @@
                 <nav class="header__fix__left">
                     <p class="level-item has-text-centered logo">
                         <router-link to="/">
-                            <img src="../../images/logo.png" alt="CalendarioFree Logo" />
+                            <img v-if="isMobile" src="../../images/logosmall.png" alt="CalendarioFree Logo" />
+                            <img v-else src="../../images/logo.png" alt="CalendarioFree Logo" />
                         </router-link>
                     </p>
                     <p class="level-item has-text-centered">
@@ -17,6 +18,11 @@
                 </nav>
                 <ul class="header__fix__right">
                      <li>
+                         <a role="button" class="navbar-burger" :class="{ 'is-active': mobileHamburger }" @click.prevent="mobileHamburger = !mobileHamburger" aria-label="menu" aria-expanded="false">
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                        </a>
                          <div id="navbarBasicExample" class="navbar-menu">
                             <div class="navbar-start">
                                 <div class="navbar-item has-dropdown is-hoverable">
@@ -40,6 +46,20 @@
                             </div>
                         </div>
                     </li>
+                    <li class="mobile_abolute" v-if="mobileHamburger">
+                         <div class="navbar-dropdown">
+                            <a v-if="user" class="navbar-item" @click="mobileHamburger = false;">
+                                <router-link to="/usuario">Mi perfil</router-link> 
+                            </a>
+                            <a v-else class="navbar-item" @click="mobileHamburger = false;">
+                                <router-link to="/login">Ingresar</router-link> 
+                            </a>
+                            <hr v-if="user" class="navbar-divider">
+                            <a v-if="user" class="navbar-item" @click.prevent="mobileHamburger = false; logout()">
+                                Salir
+                            </a>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -59,6 +79,15 @@ export default {
         userData(){
             return this.$store.getters.userData
         }
+    },
+    data(){
+        return {
+            isMobile: false,
+            mobileHamburger: false,
+        }
+    },
+    mounted(){
+        (window.innerWidth > 768) ? this.isMobile = false : this.isMobile = true
     },
     methods: {
         logout(){

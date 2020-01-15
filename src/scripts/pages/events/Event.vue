@@ -86,11 +86,11 @@
                   hashtags="calendariofree,freestyle"
                   inline-template>
                   <div class="event__content__cta__grid">
-                      <network network="email">
+                      <!-- <network network="email">
                           <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                               <path fill="#000000" d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z" />
                           </svg> Email
-                      </network>
+                      </network> -->
                       <network network="facebook">
                         <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                           <path fill="#000000" d="M5,3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5A2,2 0 0,1 5,3M18,5H15.5A3.5,3.5 0 0,0 12,8.5V11H10V14H12V21H15V14H18V11H15V9A1,1 0 0,1 16,8H18V5Z" />
@@ -134,6 +134,21 @@ import Comments from '../comments/Comments.vue'
 
  export default {
     props: ['slug'],
+    metaInfo () {
+      return {
+        title: (this.event) ? this.event.name : 'CalendarioFree - Evento',
+        meta: [
+          { name: 'description', content: (this.event) ? this.event.description : '' },
+          { name: 'keywords', content: (this.event) ? `${this.event.name}, eventos freestyle, calendario freestyle` : 'eventos freestyle, calendario freestyle' },
+
+          { name: 'og:url', content: this.url },
+          { name: 'og:title', content:  (this.event) ? this.event.name : 'CalendarioFree - Evento' },
+          { name: 'og:description', content: (this.event) ? this.event.description : ''  },
+          { name: 'og:image', content: (this.event) ? this.event.image : ''  },
+          { name: 'twitter:card', content: 'summary' }
+        ]
+      }
+    },
     components: {
         Flyer,
         Comments

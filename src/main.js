@@ -15,6 +15,15 @@ Vue.use(Notifications)
 var SocialSharing = require('vue-social-sharing');
 Vue.use(SocialSharing);
 
+
+import VueMeta from 'vue-meta'
+Vue.use(VueMeta, {
+  // optional pluginOptions
+  refreshOnceOnNavigation: true
+})
+
+// Vue.component('vue-bulma-text-editor', vueBulmaTextEditor);
+
 // import VueGeolocation from 'vue-browser-geolocation';
 // Vue.use(VueGeolocation); 
 

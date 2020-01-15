@@ -12,7 +12,7 @@
     </section>
     <div class="section__container">
         <div class="container">
-          <form @submit.prevent="validateForm()">
+          <form class="mobile_helper" @submit.prevent="validateForm()">
             <EventForm :event="newEvent"/>
           </form>
         </div>

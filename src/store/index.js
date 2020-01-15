@@ -20,8 +20,12 @@ export const store = new Vuex.Store({
     loading: false,
     error: null,
     usersLoaded:[],
+    news: []
   },
   mutations: {
+    setLoadedNews (state, payload) {
+      state.news = payload
+    },
     setLoadedEvents (state, payload) {
       state.loadedEvents = payload
     },
@@ -43,19 +47,23 @@ export const store = new Vuex.Store({
     },
     setUser (state, payload) {
       state.user = payload
-      firebase.database().ref('users/' + state.user.id).once('value')
-      .then((data) => {
-        const obj = data.val()
-        state.user.name = obj.name;
-        state.user.username = obj.username;
-        state.user.profile_pic = obj.profile_pic;
-      })
-      .catch(
-        (error) => {
-          console.log(error)
-          commit('setLoading', false)
-        }
-      )
+      if(state.user){
+        firebase.database().ref('users/' + state.user.id).once('value')
+        .then((data) => {
+          const obj = data.val()
+          state.user.name = obj.name;
+          state.user.username = obj.username;
+          state.user.profile_pic = obj.profile_pic;
+        })
+        .catch(
+          (error) => {
+            console.log(error)
+            commit('setLoading', false)
+          }
+        )
+      }else{
+        window.location.href = "/eventos";
+      }
     },
     setLoading (state, payload) {
       state.loading = payload
@@ -65,6 +73,9 @@ export const store = new Vuex.Store({
     },
     clearError (state) {
       state.error = null
+    },
+    createNew( state ){
+      state.news.push(state);
     },
     checkUserById (state, payload){
       // console.log("CheckUserById", payload, state.usersLoaded)
@@ -216,6 +227,50 @@ export const store = new Vuex.Store({
     logout ({commit}) {
       firebase.auth().signOut()
       commit('setUser', null)
+    },
+    loadNews ({commit}) {
+      // commit('setLoading', true)
+      firebase.database().ref('news').once('value')
+        .then((data) => {
+          const news = []
+          const obj = data.val()
+          for (let key in obj) {
+            news.push({
+              id: key,
+              title: obj[key].title,
+              slug: obj[key].slug,
+              image: obj[key].image,
+              content: obj[key].content,
+              time: obj[key].time
+            })
+          }
+          console.log(news);
+          commit('setLoadedNews', news)
+          // commit('setLoading', false)
+        })
+        .catch(
+          (error) => {
+            console.log(error)
+            // commit('setLoading', false)
+          }
+        )
+    },
+    createNew ({commit, getters}, payload) {
+      let singleNew = payload;
+      let now = new Date()
+      singleNew.time = now.toString();
+      // console.log("CreateNew", singleNew);
+      firebase.database().ref('news').push(singleNew)
+        .then((data) => {
+          singleNew
+          const key = data.key
+          singleNew.id = key
+          commit('createNew', singleNew)
+          window.location.href = "/noticias";
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   },
   getters: {
@@ -246,7 +301,6 @@ export const store = new Vuex.Store({
         }
       }
     },
-    
     loadedEvents (state) {
       return state.loadedEvents.sort((eventA, eventB) => {
         return ( new Date(eventA.date + ' 12:00') - new Date(eventB.date + ' 12:00'))
@@ -268,7 +322,16 @@ export const store = new Vuex.Store({
         index === self.findIndex((t) => ( t.address_country_code === event.address_country_code ))
       ).map(function(event) { return { country_code: event["address_country_code"], country: event["address_country"]  } });
     },
-  
+    loadedNews(state){
+      return state.news
+    },
+    loadedNew(state){
+      return (newSlug) => {
+        return state.news.find((single) => {
+          return single.slug === newSlug
+        })
+      }
+    },
     userEvents (state, getters){
       return (state.user ) ? getters.loadedEvents.filter(event => event.user_id == state.user.id ) : [];
     },

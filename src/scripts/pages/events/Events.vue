@@ -22,8 +22,8 @@
                 <div class="columns is-vcentered">
                     <div class="column is-hidden-mobile">
                         <div class=flyers__title>
-                            <p v-if="filters.past">Eventos anteriores: <strong>{{ pastEvents.length }}</strong></p>
-                            <p v-else>Próximos eventos: <strong>{{ nextEvents.length }}</strong></p>
+                            <p v-if="filters.past">Eventos anteriores: <strong>{{ eventsDisplayed.length }}</strong></p>
+                            <p v-else>Próximos eventos: <strong>{{ eventsDisplayed.length }}</strong></p>
                         </div>
                     </div>
                     <div class="column has-text-right flyers__filter">
@@ -36,7 +36,8 @@
                         </div>
                         <div class="select">
                             <select @change="changeCountry($event)">
-                                <option value="ALL">Todos los paises</option>
+                                <option value="ALL" selected>Todos los paises</option>
+                                <option value="CLOSEST">Mas cercanos</option>
                                 <option v-for="single in countryEvents" :value="single.country_code" :key="single.country_code">{{ single.country }}</option>
                             </select>
                         </div>
@@ -69,6 +70,10 @@ import Flyer from './Flyer.vue'
 
 export default {
     name: 'Event',
+    metaInfo: {
+      title: 'CelendarioFree',
+      titleTemplate: '%s - Próximos eventos!',
+    },
     components: {
         Flyer
     },
@@ -82,8 +87,13 @@ export default {
       eventsDisplayed(){
           let res = [];
           (this.filters.past) ? res = this.pastEvents : res = this.nextEvents;
-
-          if( this.filters.country != 'ALL' ){
+          if( this.filters.country == 'CLOSEST' ){
+              let distance = 0;
+              res = res.filter(function(event) {
+                  distance = this.getDistance(this.userCoords.lat, this.userCoords.long, event.address_lat, event.address_long, "K")
+                  return distance <= this.distanceInKM
+              }.bind(this))
+          }else if( this.filters.country != 'ALL' ){
               res = res.filter(event => event.address_country_code == this.filters.country );
           }
           return res
@@ -94,9 +104,14 @@ export default {
     },
     data(){
         return{
+            distanceInKM: 500,
             filters:{
                 past: false,
                 country: 'ALL'
+            },
+            userCoords: {
+                lat: false,
+                long: false,
             },
             pastEvents: []
         }
@@ -105,7 +120,7 @@ export default {
         changeTime(event){
             if( event.target.value === 'past' ){
                 this.pastEvents = this.$store.getters.getPastEvents
-                console.log("CHECK CHECK", this.pastEvents );
+                // console.log("CHECK CHECK", this.pastEvents );
                 this.filters.past = true
             }else{
                 this.pastEvents = []
@@ -115,35 +130,57 @@ export default {
         changeCountry(event){
             console.log("Country", event.target.value);
             this.filters.country = event.target.value;
+        },
+        askLocation(){
+            if (navigator.geolocation) {
+                let self = this;
+                navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    console.log(position);
+                    self.userCoords.lat = position.coords.latitude
+                    self.userCoords.long = position.coords.longitude
+                    console.log(self.userCoords);
+                },
+                function (error) {
+                    self.$notify({
+                        group: 'foo',
+                        type: 'error',
+                        title: 'Geolocalización denegada',
+                        text: 'Para poder ver los eventos mas cercanos a tu ubicación tienes que permitir al navegador brindarnos tu ubicación'
+                    });
+                }, {
+                    enableHighAccuracy: true
+                    , timeout: 5000
+                });
+            } else {
+                this.$notify({
+                    group: 'foo',
+                    type: 'error',
+                    title: 'Geolocalización no valida',
+                    text: 'Tu navegador no cuenta con geolocalización, aun asi puedes ver todos los eventos por país.'
+                });
+            }
+        },
+
+        getDistance(lat1, lon1, lat2, lon2, unit){
+            var radlat1 = Math.PI * lat1/180;
+            var radlat2 = Math.PI * lat2/180;
+            var theta = lon1-lon2;
+            var radtheta = Math.PI * theta/180;
+            var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);;
+            if (dist > 1) {
+                dist = 1;
+            }
+            dist = Math.acos(dist);
+            dist = dist * 180/Math.PI;
+            dist = dist * 60 * 1.1515;
+            if (unit=="K") { dist = dist * 1.609344 }
+            if (unit=="N") { dist = dist * 0.8684 }
+            return dist.toFixed(1)
         }
     },
     mounted(){
-        
-        console.log(this.$store.getters.user);
-
-        // if (navigator.geolocation) {
-        //     navigator.geolocation.getCurrentPosition(
-        //         function (position) {
-        //         //do work work here
-        //             /*
-        //             $.post("url-here", {
-        //                 long: position.coords.longitude,
-        //                 lat: position.coords.latitude
-        //             }).done(function (response) {
-        //                 alert(responsse)
-        //             });
-        //             */
-        //         },
-        //         function (error) {
-        //             alert(error.message);
-        //         }, {
-        //             enableHighAccuracy: true
-        //             , timeout: 5000
-        //         }
-        //     );
-        // } else {
-        //     alert("Geolocation is not supported by this browser.");
-        // }
+       this.askLocation();
     }
 }
 </script>

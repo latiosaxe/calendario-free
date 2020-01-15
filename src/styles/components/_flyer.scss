@@ -91,13 +91,14 @@
         }
     }
     @media (max-width: 768px) {
+        padding: 0;
         background: none !important;
-        padding: 0 10px;
         a{
             position: static;
         }
         .flyer__content__date, .flyer__content{
             color: $black;
+            padding: 0 20px;
             position: static;
         }
         .flyer__content__date{
@@ -116,6 +117,12 @@
         font-size: 3rem;
         padding: 0 20px;
         text-align: center;
+
+        @media (max-width: 768px) {
+            font-size: 2rem;
+            line-height: 120%;
+        }
+
     }
 }
 

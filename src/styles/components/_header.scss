@@ -1,4 +1,5 @@
 $headerHeight: 70px;
+$headerHeightMobile: 60px;
 
 .header{
     &__fix{
@@ -21,17 +22,30 @@ $headerHeight: 70px;
             display: flex;
             align-items: center;
             height: $headerHeight;
+            @media (max-width: 768px) {
+                height: $headerHeightMobile;
+                .level-item{
+                    margin-bottom: 0;
+                }
+            }
             p{
                 margin-right: 15px;
                 display: inline-block;
                 vertical-align: middle;
                 &:first-of-type{
                     margin-right: 30px;
+                    @media (max-width: 768px) {
+                        margin-left: 10px;
+                        margin-right: 10px;
+                    }
                 }
                 &.logo{
                     img{
                         max-height: 40px;
                         display: block;
+                        @media (max-width: 768px) {
+                            max-height: 30px;
+                        }
                     }
                 }
                 a{
@@ -64,10 +78,20 @@ $headerHeight: 70px;
                     color: $black;
                 }
             }
+            .mobile_abolute{
+                left: 0;
+                right: 0;
+                position: fixed;
+                background: #FFF;
+                top: $headerHeightMobile;
+            }
         }
     }
     &__space{
         width: 100%;
         height: $headerHeight;
+        @media (max-width: 768px) {
+            height: $headerHeightMobile;
+        }
     }
 }
