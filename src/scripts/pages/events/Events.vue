@@ -18,7 +18,7 @@
             </div>
         </section>
         <div class="section__container">
-            <div class="container" v-if="eventsDisplayed.length > 0">
+            <div class="container">
                 <div class="columns is-vcentered">
                     <div class="column is-hidden-mobile">
                         <div class=flyers__title>
@@ -37,16 +37,16 @@
                         <div class="select">
                             <select @change="changeCountry($event)">
                                 <option value="ALL" selected>Todos los paises</option>
-                                <option value="CLOSEST">Mas cercanos</option>
+                                <option value="CLOSEST">MÁS CERCANOS</option>
                                 <option v-for="single in countryEvents" :value="single.country_code" :key="single.country_code">{{ single.country }}</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <hr class="is-hidden-mobile">
-                <div class="columns is-multiline">
+                <div  v-if="eventsDisplayed.length > 0" class="columns is-multiline">
                     <template v-if="eventsDisplayed.length > 0">
-                        <div class="column is-one-third" v-for="event in eventsDisplayed" :key="event.id">
+                        <div class="column is-one-third single__flyer" v-for="event in eventsDisplayed" :key="event.id">
                             <Flyer :event="event"  :onlyFlyer="false"/>
                         </div>
                     </template>
@@ -56,11 +56,12 @@
                         </div>
                     </template>
                 </div>
+                <div v-else class="container flyer__full_width_text">
+                    <p v-if="filters.country == 'CLOSEST' && eventsDisplayed.length == 0">No podemos acceder a tu posición actual, revisa la configuración de tu navegador</p>
+                    <p v-else>Cargando</p>
+                </div>
             </div>
 
-            <div v-else class="container flyer__full_width_text">
-                <p>Cargando</p>
-            </div>
         </div>
     </div>
 </template>
@@ -86,10 +87,7 @@ export default {
       },
       eventsDisplayed(){
           let res = [];
-          console.log("- PAST", this.filters.past);
-          console.log("- NEXT", this.nextEvents);
           (this.filters.past) ? res = this.pastEvents : res = this.nextEvents;
-          console.log("- res", res);
           if( this.filters.country == 'CLOSEST' ){
               let distance = 0;
               res = res.filter(function(event) {
@@ -184,6 +182,7 @@ export default {
     },
     mounted(){
        this.askLocation();
+       this.$analytics.logEvent("page_view");
     }
 }
 </script>

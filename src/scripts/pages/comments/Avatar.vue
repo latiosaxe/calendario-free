@@ -18,7 +18,6 @@ export default {
       }
     },
     mounted(){
-        console.log(this.user_id);
         this.$store.dispatch('getUserById', this.user_id);
     }
 }

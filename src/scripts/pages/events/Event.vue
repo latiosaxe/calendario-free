@@ -1,5 +1,5 @@
 <template>
-  <section class="section">
+  <section class="section mobile_helper">
     <div class="container">
       <template v-if="!event">
         <div class="container flyer__full_width_text">
@@ -51,9 +51,9 @@
                       </svg>
                     </p>
                     <p><span>Inicia</span></p>
-                    <p>{{ event.date_init}}</p>
+                    <p>{{ (event.date_init)? event.date_init : 'No especificado'}}</p>
                 </div>
-                <div class="event__content__metadata__element has-text-centered">
+                <div v-if="event.date_end" class="event__content__metadata__element has-text-centered">
                   <p>
                     <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                         <path fill="#000000" d="M6,2V8H6V8L10,12L6,16V16H6V22H18V16H18V16L14,12L18,8V8H18V2H6Z" />
@@ -68,12 +68,13 @@
                 <article class="message is-dark">
                   <div class="message-body">
                     <p v-if="event.price_inscription && event.price_inscription != 0"><strong>Precio de inscripción: </strong>{{ event.price_inscription }}</p>
-                    <p><strong>Precio al público: </strong>{{ (event.price_public) ? event.price_public : 'No especificado' }}</p>
+                    <div v-if="event.price_public" v-html="event.price_public "></div>
+                    <p v-else><strong>Precio al público: </strong>No especificado</p>
                     
                     <p v-if="event.website"><a class="button is-dark" :href="event.website">Sitio web</a></p>
-                    <p><strong>Email de contacto: </strong>{{ event.email }}</p>
                   </div>
                 </article>
+                <p v-if="event.email"><strong>Email de contacto: </strong>{{ event.email }}</p>
               </div>
 
               <p class="event__content__age">{{ ( event.event_18 ) ? 'Evento para mayores de 18 años.' : 'Evento para todas las edades, edad mínima sugerida 3 años.' }}</p>
@@ -123,7 +124,7 @@
                 </social-sharing>
               </div>
 
-              <Comments  v-if="user" :slug="slug" :user="user"/>
+              <Comments :slug="slug" :user="user"/>
 
               <div v-if="user && user.id == event.user_id" class="has-text-right">
                 <hr>
@@ -154,10 +155,10 @@ import Comments from '../comments/Comments.vue'
           { name: 'description', content: (this.event) ? this.event.description : '' },
           { name: 'keywords', content: (this.event) ? `${this.event.name}, eventos freestyle, calendario freestyle` : 'eventos freestyle, calendario freestyle' },
 
-          { name: 'og:url', content: this.url },
-          { name: 'og:title', content:  (this.event) ? this.event.name : 'CalendarioFree - Evento' },
-          { name: 'og:description', content: (this.event) ? this.event.description : ''  },
-          { name: 'og:image', content: (this.event) ? this.event.image : ''  },
+          { name: 'og:url', key: 'og:url', content: this.url },
+          { name: 'og:title', key: 'og:title', content:  (this.event) ? this.event.name : 'CalendarioFree - Evento' },
+          { name: 'og:description', key: 'og:description', content: (this.event) ? this.event.description : ''  },
+          { name: 'og:image',  key: 'og:image', content: (this.event) ? this.event.image : ''  },
           { name: 'twitter:card', content: 'summary' }
         ]
       }
@@ -180,10 +181,10 @@ import Comments from '../comments/Comments.vue'
       }
     },
     mounted(){
-
       (window.innerWidth > 768) ? this.isMobile = false : this.isMobile = true
       this.url = window.location.href; 
       this.footerHeight = document.getElementById('footer').clientHeight;
+      this.$analytics.logEvent("page_view");
     },
     computed: {
       event () {
@@ -231,7 +232,7 @@ import Comments from '../comments/Comments.vue'
         if (navigator.share) {
             navigator.share({
                 title: this.event.name,
-                text: this.event.description,
+                text: this.event.name,
                 url: this.url,
                 image: this.event.image,
             }).then(() => {

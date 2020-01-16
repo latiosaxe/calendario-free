@@ -70,7 +70,8 @@ export default {
                     this.loading = false;
                 }.bind(this), 300)
             }
-        }.bind(this), 1000)
+        }.bind(this), 1000);
+        this.$analytics.logEvent("page_view");
     }
 }
 </script>

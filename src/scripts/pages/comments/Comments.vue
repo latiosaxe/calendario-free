@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="event__comments">
-      <form v-if="show_new" @submit.prevent="sendComment()">
+      <form v-if="show_new && user" @submit.prevent="sendComment()">
         <div class="columns">
           <div class="column" v-if="user.username">
             <div class="field">
@@ -22,15 +22,15 @@
           </div>
         </div>
       </form>
-
-      <div class="event__comments__list">
-        <div v-for="comment in comments" :key="comment.id" class="event__comments__list__single">
-          <div class="event__comments__list__single__user">
-            <Avatar :user_id="comment[comment.id].user_id" />
-          </div>
-          <div class="event__comments__list__single__comment">
-            {{ comment[comment.id].message }}
-          </div>
+    </div>
+    <div v-if="comments" class="event__comments__list">
+      <p><strong class="has-text-grey">Comentarios:</strong></p>
+      <div v-for="comment in comments" :key="comment.id" class="event__comments__list__single">
+        <div class="event__comments__list__single__user">
+          <Avatar :user_id="comment[comment.id].user_id" />
+        </div>
+        <div class="event__comments__list__single__comment">
+          {{ comment[comment.id].message }}
         </div>
       </div>
     </div>

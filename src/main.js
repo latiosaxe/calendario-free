@@ -22,6 +22,8 @@ Vue.use(VueMeta, {
   refreshOnceOnNavigation: true
 })
 
+import "@firebase/analytics";
+
 // Vue.component('vue-bulma-text-editor', vueBulmaTextEditor);
 
 // import VueGeolocation from 'vue-browser-geolocation';
@@ -42,6 +44,12 @@ new Vue({
     })
     this.$store.dispatch('loadEvents')
     console.log("Running Firebase!");
+
+
+    firebase.analytics();
+    // alias
+    Vue.prototype.$analytics = firebase.analytics();
+    this.$analytics.logEvent("notification_received");
   },
 });
 

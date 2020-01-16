@@ -75,7 +75,8 @@ export default {
         address_state: '',
         address_lat: false,
         address_long: false,
-        top_four: ''
+        top_four: '',
+        is_plaza: false
       }
     }
   },
@@ -84,7 +85,7 @@ export default {
       this.newEvent = this.event;
       if(this.newEvent.name.length > 0){
         this.newEvent.slug = string_to_slug(this.newEvent.name);
-
+          console.log("Editar",  this.newEvent);
           this.$store.dispatch('editEvent', this.newEvent);
         // const eventValid = this.$store.getters.loadedEvent(this.newEvent.slug);
 

@@ -65,6 +65,7 @@ export default {
         address_lat: false,
         address_long: false,
         top_four: '',
+        is_plaza: false
       }
     }
   },

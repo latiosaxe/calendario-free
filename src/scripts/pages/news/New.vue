@@ -99,13 +99,14 @@ export default {
         (window.innerWidth > 768) ? this.isMobile = false : this.isMobile = true
         this.url = window.location.href; 
         this.$store.dispatch('loadNews');
+        this.$analytics.logEvent("page_view");
     },
     methods:{
         mobileShare(){
             if (navigator.share) {
                 navigator.share({
                     title: this.singleNew.title,
-                    text: this.singleNew.content,
+                    text: this.singleNew.title,
                     url: this.url,
                     image: this.singleNew.image,
                 }).then(() => {

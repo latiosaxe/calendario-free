@@ -136,6 +136,7 @@ export const store = new Vuex.Store({
               tickets: obj[key].tickets,
               user_id: obj[key].user_id,
               top_four: obj[key].top_four,
+              is_plaza: obj[key].is_plaza,
             })
           }
           commit('setLoadedEvents', events)
@@ -171,6 +172,7 @@ export const store = new Vuex.Store({
         tickets: payload.tickets,
         user_id: payload.user_id,
         top_four: payload.top_four,
+        is_plaza: payload.is_plaza,
       }
       firebase.database().ref('events').push(event)
         .then((data) => {
@@ -191,6 +193,7 @@ export const store = new Vuex.Store({
         .then((data) => {
           commit('deleteEvent', event)
           commit('createEvent', event)
+          window.location.href = "/eventos/"+event.slug;
         })
         .catch((error) => {
           console.log(error)
@@ -214,10 +217,12 @@ export const store = new Vuex.Store({
       firebase.database().ref('comments').orderByChild("event").equalTo(payload).on("value", snapshot => {
         let array = [];
         let obj = snapshot.val();
-        Object.keys(obj).forEach((key) => {
-          array.push({[key]: obj[key]});
-        });
-        commit('setEventComments', array)
+        if(obj){
+          Object.keys(obj).forEach((key) => {
+            array.push({[key]: obj[key]});
+          });
+          commit('setEventComments', array)
+        }
       });
     },
     getUserById({commit, getters}, payload){

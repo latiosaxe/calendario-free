@@ -5,17 +5,17 @@
                 <div class="field">
                   <label class="label">Nombre <span>*</span></label>
                   <div class="control">
-                    <input class="input" type="text" placeholder="Jam 105" required v-model="event.name">
+                    <input class="input" type="text" placeholder="Super evento" required v-model="event.name">
                   </div>
                 </div>
               </div>
               <div class="column">
                 <div class="field">
-                  <label class="label">Imagen</label>
+                  <label class="label">Imagen <span>*</span></label>
                   <div class="control">
-                    <input class="input" type="text" placeholder="https://home-statics.boletia.com/uploads/event/banner/163239/Boletia-Banner.jpg" v-model="event.image">
+                    <input class="input" type="text" placeholder="http:..." v-model="event.image" required="required">
                   </div>
-                  <p class="help">Proximamente se podrán subir imagene</p>
+                  <p class="help">Proximamente se podrán subir imagenes</p>
                 </div>
               </div>
             </div>
@@ -96,7 +96,7 @@
                 <div class="field">
                   <label class="label">Descripción</label>
                   <div class="control">
-                    <vue-editor v-model="event.description" required="required"></vue-editor>
+                    <vue-editor v-model="event.description"></vue-editor>
                   </div>
                 </div>
               </div>
@@ -105,9 +105,9 @@
             <div class="columns">
               <div class="column">
                 <div class="field">
-                  <label class="label">Precio al publico</label>
+                  <label class="label">Precio(s)</label>
                   <div class="control">
-                    <input class="input" type="text" placeholder="$500"  v-model="event.price_public">
+                    <vue-editor v-model="event.price_public"  placeholder="Entrada General..."></vue-editor>
                   </div>
                 </div>
               </div>
@@ -116,6 +116,16 @@
                   <label class="label">Precio inscripción</label>
                   <div class="control">
                     <input class="input" type="text" placeholder="$500"  v-model="event.price_inscription">
+                  </div>
+                  <p class="help">Regularmente aplica solo a plaza.</p>
+                </div>
+                 <div class="field">
+                  <div class="control">
+                    <label class="checkbox">
+                      <input type="checkbox" v-model="event.is_plaza">
+                      ¿El Evento es de plaza?
+                    </label>
+                    <p class="help">Si no es de plaza se cuenta como evento de escenario.</p>
                   </div>
                 </div>
               </div>
@@ -126,8 +136,7 @@
                 <div class="field">
                   <div class="label">Día del Evento</div>
                   <div class="control" style="position: relative">
-
-                    <Datepicker :value="time_init"></Datepicker>
+                    <Datepicker :value="time_init" @selected="dateChanged"></Datepicker>
                     <!-- <datepicker :value="time_init"
                         @input="log"
                         :min="time_init"
@@ -161,7 +170,7 @@
                     <div class="field">
                         <label class="label">Top 4:</label>
                         <div class="control">
-                            <vue-editor v-model="event.top_four" required="required"></vue-editor>
+                            <vue-editor v-model="event.top_four"></vue-editor>
                         </div>
                     </div>
                 </div>
@@ -172,7 +181,7 @@
                 <div class="field">
                   <div class="control">
                     <label class="checkbox">
-                      <input type="checkbox"  v-model="event.event_18">
+                      <input type="checkbox" v-model="event.event_18">
                       Evento exclusivo para mayores de Edad
                     </label>
                   </div>
@@ -232,8 +241,10 @@ export default {
         }
     },
     methods: {
-        log(val) {
-            this.time_init = val
+        dateChanged(newDate){
+          this.time_init = newDate.toString();
+          this.event.date = this.time_init;
+          console.log("this.time_init", this.time_init);
         },
         setAddress(address){
             console.log("Set Address", address);
@@ -265,8 +276,13 @@ export default {
         },
         replaceCountry(){
             this.event.address_country.replace('República Bolivariana De Venezuela', 'Venezuela')
-                                      .replace('República de Chile', 'Chile');
-            this.event.date = this.time_init;
+                                      .replace('República de Chile', 'Chile')
+                                      .replace('República de El Salvador', 'El Salvador')
+                                      
+            this.event.city.replace('Comunidad de Madrid', 'Madrid')
+                            .replace('Ciudad de México', 'CDMX');
+            // this.event.date = this.time_init;
+            // console.log("NEW DATE SETED", this.event.date);
         }
     },
     watch: {

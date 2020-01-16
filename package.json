@@ -9,6 +9,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "@firebase/analytics": "^0.2.10",
     "@livelybone/vue-datepicker": "^3.1.0",
     "bulma": "^0.8.0",
     "bulma-calendar": "^6.0.7",

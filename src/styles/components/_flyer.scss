@@ -4,7 +4,7 @@
     padding-bottom: 150%;
     background: center center no-repeat $black;
     background-size: contain;
-    a{
+    & > a{
         top: 0;
         left: 0;
         right: 0;
@@ -28,6 +28,19 @@
             display: block;
             overflow: hidden;
             max-height: 70px;
+            a>{
+                position: static;
+                display: inline;
+            }
+            *{
+                color: #FFF !important;
+                @media (max-width: 768px) {
+                    color: #000 !important;
+                    br{
+                        display: none;
+                    }
+                }
+            }
         }
         &__date{
             top: 15px;
@@ -38,9 +51,10 @@
             text-shadow: 0 0 5px rgba(0, 0, 0, 1);
         }
         &__metadata{
-            margin-top: 12px;
-            display: flex;
             width: 100%;
+            display: flex;
+            margin-top: 12px;
+            align-items: center;
             border: 1px solid #777;
             div{
                 flex: 1;
@@ -56,6 +70,7 @@
             display: none;
             @media (max-width: 768px) {
                 display: block;
+                margin-bottom: 15px;
             }
         }
         h5{
@@ -123,6 +138,12 @@
             line-height: 120%;
         }
 
+    }
+}
+
+@media (max-width: 768px) {
+    .single__flyer{
+        margin-bottom: 20px;
     }
 }
 

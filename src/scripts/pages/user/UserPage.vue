@@ -146,6 +146,9 @@ export default {
             this.updated = true
             return this.$store.getters.updateUserInfo(this.userInfo);
         }
+    },
+    mounted(){
+        this.$analytics.logEvent("page_view");
     }
 }
 </script>
