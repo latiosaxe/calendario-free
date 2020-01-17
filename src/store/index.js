@@ -58,7 +58,7 @@ export const store = new Vuex.Store({
         .catch(
           (error) => {
             console.log(error)
-            commit('setLoading', false)
+            // commit('setLoading', false)
           }
         )
       }else{

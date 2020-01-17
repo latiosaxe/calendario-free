@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import MainPage from '../scripts/pages/MainPage.vue';
+import PageNotFound from '../scripts/pages/PageNotFound.vue';
 import Event from '../scripts/pages/events/Event.vue';
 import Events from '../scripts/pages/events/Events.vue';
 import SubmitEvent from '../scripts/pages/events/SubmitEvent.vue';
@@ -17,6 +18,7 @@ Vue.use(Router)
 
 // { path: '/', component: MainPage },
 export default new Router({
+  mode: 'history',
   routes: [
     { path: '/', component: Events },
 
@@ -31,6 +33,10 @@ export default new Router({
     
     { path: '/login', component: LoginPage },
     { path: '/usuario', component: UserPage },
-  ],
-  mode: 'history'
+
+    {
+        path: '*',
+        component: PageNotFound
+    }
+  ]
 })

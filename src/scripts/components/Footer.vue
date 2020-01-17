@@ -1,6 +1,6 @@
 <template>
     <footer id="footer" class="footer">
-        <div class="content has-text-centered">
+        <div class="content has-text-centered" style="padding: 0 20px;">
             <p>
                 <strong class="has-text-white">CalendarioFree</strong> es un proyecto creado por <a href="https://www.youtube.com/channel/UCJz6yD1dNosjSH80kc7hYEA" target="_blank">60 Segundos freestyle</a>.
             </p>

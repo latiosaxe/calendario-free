@@ -278,6 +278,7 @@ export default {
             this.event.address_country.replace('República Bolivariana De Venezuela', 'Venezuela')
                                       .replace('República de Chile', 'Chile')
                                       .replace('República de El Salvador', 'El Salvador')
+                                      .replace('Estado Plurinacional de Bolivia', 'Bolivia')
                                       
             this.event.city.replace('Comunidad de Madrid', 'Madrid')
                             .replace('Ciudad de México', 'CDMX');

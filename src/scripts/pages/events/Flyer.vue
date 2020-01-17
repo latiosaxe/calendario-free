@@ -2,7 +2,8 @@
    <div class="flyer" :class="{ 'onlyFlyer': onlyFlyer }" :style="{ 'background-image': `url(${getmIage()})` }">
         <a :href="`/eventos/${event.slug}`">
             <img v-if="event.image" class="flyer__content__mobile_image" :src="event.image">
-            <p class="flyer__content__date" v-if="event.date"> {{ event.date | date }}</p>
+            <p class="flyer__content__date"> {{ event.date | date }}</p>
+            <div  v-if="event.is_plaza" class="flyer__plaza"><i class="fas fa-road"></i></div>
             <div class="flyer__content">
                 <h5 v-if="event.name" v-text="event.name"></h5>
                 <div class="flyer__content__description" v-if="event.description" v-html="event.description"></div>

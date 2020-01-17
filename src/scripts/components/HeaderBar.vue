@@ -1,5 +1,5 @@
 <template>
-    <header class="header">
+    <header id="header" class="header">
         <div class="header__fix">
             <div class="container">
                 <nav class="header__fix__left">

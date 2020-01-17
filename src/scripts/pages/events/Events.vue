@@ -58,7 +58,7 @@
                 </div>
                 <div v-else class="container flyer__full_width_text">
                     <p v-if="filters.country == 'CLOSEST' && eventsDisplayed.length == 0">No podemos acceder a tu posición actual, revisa la configuración de tu navegador</p>
-                    <p v-else>Cargando</p>
+                    <p v-else>Cargando <i class="fas fa-spinner fa-spin"></i></p>
                 </div>
             </div>
 
@@ -68,6 +68,7 @@
 
 <script>
 import Flyer from './Flyer.vue'
+import VueAos from 'vue-aos'
 
 export default {
     name: 'Event',
@@ -76,7 +77,8 @@ export default {
       titleTemplate: '%s - Próximos eventos!',
     },
     components: {
-        Flyer
+        Flyer,
+        VueAos
     },
     computed: {
       allEvents () {

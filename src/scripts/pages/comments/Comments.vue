@@ -24,7 +24,7 @@
       </form>
     </div>
     <div v-if="comments" class="event__comments__list">
-      <p><strong class="has-text-grey">Comentarios:</strong></p>
+      <p style="margin-bottom: 5px;"><strong class="has-text-grey">{{ (comments.length > 0)? 'Comentarios:' : 'Aún sin comentarios' }}</strong></p>
       <div v-for="comment in comments" :key="comment.id" class="event__comments__list__single">
         <div class="event__comments__list__single__user">
           <Avatar :user_id="comment[comment.id].user_id" />
@@ -33,6 +33,7 @@
           {{ comment[comment.id].message }}
         </div>
       </div>
+      <div style="padding: 10px 15px; background: #f1f1f1;" v-if="!user">Para comentar es necesario ingresar a la plataforma <router-link to="/login" class="button is-warning mobile_full_width mobile_margin_top_10">Ingresar / Crear Cuenta</router-link></div>
     </div>
   </div>
 </template>
