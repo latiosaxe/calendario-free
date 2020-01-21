@@ -44,6 +44,10 @@
                 position: static;
                 display: inline;
             }
+            img{
+                width: auto !important;
+                display: inline !important;
+            }
             *{
                 color: #FFF !important;
                 @media (max-width: 768px) {
@@ -118,21 +122,23 @@
         }
     }
     @media (max-width: 768px) {
-        padding: 0;
-        background: none !important;
-        a{
-            position: static;
-        }
-        .flyer__content__date, .flyer__content{
-            color: $black;
-            padding: 0 20px;
-            position: static;
-        }
-        .flyer__content__date{
-            text-shadow: none;
-        }
-        &:before{
-            display: none;
+        &:not(.slider){
+            padding: 0;
+            background: none !important;
+            a{
+                position: static;
+            }
+            .flyer__content__date, .flyer__content{
+                color: $black;
+                padding: 0 20px;
+                position: static;
+            }
+            .flyer__content__date{
+                text-shadow: none;
+            }
+            &:before{
+                display: none;
+            }
         }
     }
 }

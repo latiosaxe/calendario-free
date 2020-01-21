@@ -47,9 +47,7 @@ new Vue({
 
 
     firebase.analytics();
-    // alias
     Vue.prototype.$analytics = firebase.analytics();
-    this.$analytics.logEvent("notification_received");
   },
 });
 

@@ -3,7 +3,7 @@
         <section class="hero is-warning">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title">Eventos</h1>
+                    <h1 class="title">Eventos esta Semana <small v-if="thisWeek.length > 0">({{thisWeek.length}})</small></h1>
                     <h2 class="subtitle" style="margin-bottom: 0">
                         <p>Habilita <strong>tu locación</strong> para mostrarte los eventos mas cerca de ti.</p>
                     </h2>
@@ -17,6 +17,26 @@
                 </div>
             </div>
         </section>
+        <div v-if="thisWeek.length > 0" class="events_hero">
+            <!-- <div class="events_hero__title">Esta Semana</div> -->
+            <div class="events_hero__carousel">
+                <carousel
+                    :autoplay="false" 
+                    :autoplayTimeout="5000" 
+                    :autoplayHoverPause="true"
+                    :center="true" 
+                    :nav="false" 
+                    :autoWidth="false"
+                    :loop="true"
+                    :responsive="{0:{items:1,dots:false,autoWidth:false,autoHeight:true},768:{dots:true,autoWidth:false,autoHeight:false}}"
+                >
+                <div v-for="card in thisWeek" :key="card.id" class="events_hero__carousel__card">
+                     <Flyer :event="card" :slider="true"  :onlyFlyer="false"/>
+                </div>
+
+                </carousel>
+            </div>
+        </div>
         <div class="section__container">
             <div class="container">
                 <div class="columns is-vcentered">
@@ -30,8 +50,8 @@
                         <span class="is-hidden-mobile">Filtrar: </span>
                         <div class="select">
                             <select @change="changeTime($event)">
-                                <option value="future">Próximos eventos</option>
-                                <option value="past">Eventos pasados</option>
+                                <option value="future" v-text="(!isMobile)?'Próximos eventos':'Próximos'"></option>
+                                <option value="past" v-text="(!isMobile)?'Eventos pasados':'Anteriores'"></option>
                             </select>
                         </div>
                         <div class="select">
@@ -69,6 +89,7 @@
 <script>
 import Flyer from './Flyer.vue'
 import VueAos from 'vue-aos'
+import carousel from 'vue-owl-carousel'
 
 export default {
     name: 'Event',
@@ -78,7 +99,8 @@ export default {
     },
     components: {
         Flyer,
-        VueAos
+        VueAos,
+        carousel
     },
     computed: {
       allEvents () {
@@ -103,10 +125,14 @@ export default {
       },
       countryEvents(){
         return this.$store.getters.getCountryEvents;
+      },
+      thisWeek(){
+        return this.$store.getters.getThisWeekEvents
       }
     },
     data(){
         return{
+            isMobile: false,
             distanceInKM: 500,
             filters:{
                 past: false,
@@ -185,6 +211,7 @@ export default {
     mounted(){
        this.askLocation();
        this.$analytics.logEvent("page_view");
+        (window.innerWidth > 768) ? this.isMobile = false : this.isMobile = true
     }
 }
 </script>

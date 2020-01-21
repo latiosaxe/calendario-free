@@ -9,6 +9,7 @@
 @import "components/event";
 @import "components/comments";
 @import "components/news";
+@import "components/leagues";
 
 
 .section__container{
@@ -22,6 +23,12 @@
 .hero{
     .hero-body{
         position: relative;
+        .title{
+            small{
+                font-size: 30%;
+                margin-left: -1%;
+            }
+        }
         &.is-warning{
             background: $main-color;
             a{

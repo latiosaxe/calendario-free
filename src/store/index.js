@@ -313,9 +313,16 @@ export const store = new Vuex.Store({
         return ( new Date(eventA.date) - new Date(eventB.date))
       })
     },
-    
+    getThisWeekEvents(state, getters){
+      let now = new Date()
+      now.setDate(now.getDate()-1);
+      let date = new Date()
+      const lastdayAux = date.getDate() - (date.getDay() - 1) + 7;
+      const lastday = new Date(date.setDate(lastdayAux)).setHours(0, 0, 0, 0);
+      return getters.loadedEvents.filter(event => new Date(event.date) >= now && new Date(event.date).setHours(0, 0, 0, 0) < lastday);
+    },
     getNextEvents(state, getters){
-      let now = new Date();
+      let now = new Date()
       now.setDate(now.getDate()-1); //PLUS ONE DAY
       return getters.loadedEvents.filter(event => new Date(event.date) >= now );
     },

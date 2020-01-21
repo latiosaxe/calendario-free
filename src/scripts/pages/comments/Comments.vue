@@ -66,12 +66,15 @@ export default {
   methods: {
     sendComment(){
       console.log("sendComment", this.newComment.message);
-      this.newComment.user_id = this.user.id;
-      this.newComment.event = this.slug;
-      this.newComment.points = 0;
-      // this.newComment.postedAt = new Date();
-      this.$store.dispatch('createComment', this.newComment)
-      this.show_new = false;
+      if(this.newComment.message.length > 0){
+        this.newComment.user_id = this.user.id;
+        this.newComment.event = this.slug;
+        this.newComment.points = 0;
+        // this.newComment.postedAt = new Date();
+        this.$store.dispatch('createComment', this.newComment)
+        this.$analytics.logEvent("notification_received");
+        this.show_new = false;
+      }
     }
   }
 }

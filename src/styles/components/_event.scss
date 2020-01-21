@@ -98,3 +98,31 @@
     }
 }
 
+.events_hero{
+    &__title{
+        font-size: 2rem;
+        text-align: center;
+    }
+    &__carousel{
+        width: 100%;
+        display: block;
+        &__card{
+            width: 100%;
+            display: block;
+            .flyer{
+                height: 350px;
+                padding-bottom: 0;
+                background-size: cover;
+                @media (max-width: 768px){
+                    // background: center center no-repeat !important;
+                }
+                .flyer__content__metadata{
+                    display: none;
+                }
+                .flyer__content__mobile_image{
+                    // display: none !important;
+                }
+            }
+        }
+    }
+}

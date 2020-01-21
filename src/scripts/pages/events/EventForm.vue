@@ -280,7 +280,7 @@ export default {
                                       .replace('República de El Salvador', 'El Salvador')
                                       .replace('Estado Plurinacional de Bolivia', 'Bolivia')
                                       
-            this.event.city.replace('Comunidad de Madrid', 'Madrid')
+            this.event.address_city.replace('Comunidad de Madrid', 'Madrid')
                             .replace('Ciudad de México', 'CDMX');
             // this.event.date = this.time_init;
             // console.log("NEW DATE SETED", this.event.date);

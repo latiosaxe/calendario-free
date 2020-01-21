@@ -277,6 +277,11 @@ hr.black {
   display: inline;
 }
 
+.flyer__content__description img {
+  width: auto !important;
+  display: inline !important;
+}
+
 .flyer__content__description * {
   color: #FFF !important;
 }
@@ -367,22 +372,22 @@ hr.black {
 }
 
 @media (max-width: 768px) {
-  .flyer {
+  .flyer:not(.slider) {
     padding: 0;
     background: none !important;
   }
-  .flyer a {
+  .flyer:not(.slider) a {
     position: static;
   }
-  .flyer .flyer__content__date, .flyer .flyer__content {
+  .flyer:not(.slider) .flyer__content__date, .flyer:not(.slider) .flyer__content {
     color: #0b122f;
     padding: 0 20px;
     position: static;
   }
-  .flyer .flyer__content__date {
+  .flyer:not(.slider) .flyer__content__date {
     text-shadow: none;
   }
-  .flyer:before {
+  .flyer:not(.slider):before {
     display: none;
   }
 }
@@ -560,6 +565,31 @@ hr.black {
   margin-right: 2px;
 }
 
+.events_hero__title {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.events_hero__carousel {
+  width: 100%;
+  display: block;
+}
+
+.events_hero__carousel__card {
+  width: 100%;
+  display: block;
+}
+
+.events_hero__carousel__card .flyer {
+  height: 350px;
+  padding-bottom: 0;
+  background-size: cover;
+}
+
+.events_hero__carousel__card .flyer .flyer__content__metadata {
+  display: none;
+}
+
 .event__comments {
   width: 100%;
   margin-top: 20px;
@@ -715,6 +745,22 @@ hr.black {
   border-top: 1px solid #0b122f;
 }
 
+.leagues table {
+  width: 100%;
+}
+
+.leagues table tr td:last-of-type {
+  text-align: right;
+}
+
+.leagues table tr:nth-of-type(2n) {
+  background: #f9f9f9;
+}
+
+.leagues table tr:hover {
+  background: #f4ffff;
+}
+
 .section__container {
   overflow: hidden;
   margin-top: 20px;
@@ -726,6 +772,11 @@ hr.black {
 
 .hero .hero-body {
   position: relative;
+}
+
+.hero .hero-body .title small {
+  font-size: 30%;
+  margin-left: -1%;
 }
 
 .hero .hero-body.is-warning {

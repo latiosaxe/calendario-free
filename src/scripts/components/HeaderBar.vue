@@ -13,7 +13,7 @@
                         <router-link to="/eventos"><span>Eventos</span></router-link>
                     </p>
                     <p class="level-item has-text-centered">
-                        <router-link to="/noticias"><span>Noticias</span></router-link>
+                        <router-link to="/fms"><span>Ascenso FMS</span></router-link>
                     </p>
                 </nav>
                 <ul class="header__fix__right">

@@ -1,5 +1,5 @@
 <template>
-   <div class="flyer" :class="{ 'onlyFlyer': onlyFlyer }" :style="{ 'background-image': `url(${getmIage()})` }">
+   <div class="flyer" :class="{ 'onlyFlyer': onlyFlyer, 'slider': slider }" :style="{ 'background-image': `url(${getmIage()})` }">
         <a :href="`/eventos/${event.slug}`">
             <img v-if="event.image" class="flyer__content__mobile_image" :src="event.image">
             <p class="flyer__content__date"> {{ event.date | date }}</p>
@@ -21,7 +21,7 @@
 <script>
 export default {
     name: 'Flyer',
-    props:[ 'event', 'onlyFlyer' ],
+    props:[ 'event', 'onlyFlyer', 'slider' ],
     mounted(){
     },
     methods: {

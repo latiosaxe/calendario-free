@@ -1,0 +1,19 @@
+.leagues{
+    table{
+        width: 100%;
+        tr{
+            td{
+                &:last-of-type{
+                    text-align: right;
+                }
+            }
+            &:nth-of-type(2n){
+                background: #f9f9f9;
+            }
+            &:hover{
+                background: #f4ffff;
+            }
+        }
+        
+    }
+}

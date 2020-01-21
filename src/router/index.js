@@ -14,6 +14,8 @@ import News from '../scripts/pages/news/News.vue';
 import New from '../scripts/pages/news/New.vue';
 import CreateNew from '../scripts/pages/news/CreateNew.vue';
 
+import FMS from '../scripts/pages/Leagues/Ascenso.vue';
+
 Vue.use(Router)
 
 // { path: '/', component: MainPage },
@@ -33,6 +35,8 @@ export default new Router({
     
     { path: '/login', component: LoginPage },
     { path: '/usuario', component: UserPage },
+
+    { path: '/fms', component: FMS },
 
     {
         path: '*',
