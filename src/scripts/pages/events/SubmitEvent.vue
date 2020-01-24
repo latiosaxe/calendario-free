@@ -21,8 +21,6 @@
 </template>
 
 <script>
-import firebase from 'firebase';
-import config from '../../config/config';
 
 import { string_to_slug } from '../../helpers'
 import {Datepicker, Timepicker, DatetimePicker} from '@livelybone/vue-datepicker'; 
@@ -34,17 +32,16 @@ export default {
     Datepicker, Timepicker, DatetimePicker, EventForm
   },
   mounted(){
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.newEvent.user_id = this.$store.getters.user.id
-      }else{
-        this.$router.push('/eventos');
-      }
-    })
+    // firebase.auth().onAuthStateChanged((user) => {
+    //   if (user) {
+    //     this.newEvent.user_id = this.$store.getters.user.id
+    //   }else{
+    //     this.$router.push('/eventos');
+    //   }
+    // })
   },
   data(){
     return{
-      
       newEvent: {
         name: '',
         slug: '',
@@ -52,6 +49,7 @@ export default {
         email: '',
         website: '',
         tickets: '',
+        organization: '',
         description: '',
         price_public: '',
         price_inscription: '',
@@ -65,7 +63,8 @@ export default {
         address_lat: false,
         address_long: false,
         top_four: '',
-        is_plaza: false
+        is_plaza: false,
+        user_id:false
       }
     }
   },
@@ -86,6 +85,7 @@ export default {
           });
         }else{
           console.log("Pushing Event", this.newEvent);
+          if(!this.newEvent.date){this.newEvent.date=new Date().toString();console.log("Today!")}
           this.$store.dispatch('createEvent', this.newEvent);
           this.$router.push('/eventos');
         }

@@ -28,8 +28,8 @@
           <div class="event__content column is-half">
             <div ref="eventContent">
               <p v-if="event.is_plaza" class="help"><i class="fas fa-road" style="margin-right: 5px;"></i><strong>Evento de plaza</strong></p>
+              <p v-if="event.organization"><strong style="color: #717171;">{{event.organization}} presenta:</strong></p>
               <h1 class="title">{{ event.name }}</h1>
-
               <div v-if="event.top_four" class="event__content__top_four">
                 <p><strong>El evento ya se llevó a cabo, estas son las posiciones:</strong></p>
                 <hr />

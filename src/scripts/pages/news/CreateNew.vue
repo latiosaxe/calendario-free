@@ -49,9 +49,6 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-import config from '../../config/config';
-
 import { string_to_slug } from '../../helpers'
 import { VueEditor } from "vue2-editor";
 
@@ -59,13 +56,6 @@ export default {
     name: 'CreateNew',
     components: {
         VueEditor
-    },
-    mounted(){
-        firebase.auth().onAuthStateChanged((user) => {
-            if (!user) {
-                this.$router.push('/eventos');
-            }
-        })
     },
     data(){
         return{
@@ -76,6 +66,7 @@ export default {
             }
         }
     },
+    mounted(){},
     methods:{
         createNew(){
             if(this.newData.title && this.newData.content && this.newData.image){

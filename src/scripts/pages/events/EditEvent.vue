@@ -31,8 +31,6 @@
 </template>
 
 <script>
-import firebase from 'firebase';
-import config from '../../config/config';
 
 import { string_to_slug } from '../../helpers'
 import {Datepicker, Timepicker, DatetimePicker} from '@livelybone/vue-datepicker'; 
@@ -63,6 +61,7 @@ export default {
         email: '',
         website: '',
         tickets: '',
+        organization: '',
         description: '',
         price_public: '',
         price_inscription: '',

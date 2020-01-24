@@ -217,9 +217,6 @@ export default {
       Datepicker,
       VueEditor
     },
-    mounted(){
-        console.log(this.event);
-    },
     data(){
         return{
             dayStr: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
@@ -238,6 +235,12 @@ export default {
                 },
             },
             isM: { isMobile: true, maxHeight: 200 }
+        }
+    },
+    mounted(){
+        console.log(this.event);
+        if(this.event.address_city){
+          this.address = this.event.address_city;
         }
     },
     methods: {

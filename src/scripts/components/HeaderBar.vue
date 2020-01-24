@@ -69,8 +69,6 @@
 </template>
 
 <script>
-import firebase from 'firebase';
-
 export default {
     computed:{
         user(){
@@ -93,11 +91,6 @@ export default {
         logout(){
             console.log("LOGOUT");
             this.$store.dispatch('logout')
-            // firebase.auth().signOut().then(function() {
-            //     this.$router.push('/eventos');
-            // }).catch(function(error) {
-            // // An error happened.
-            // });
         }
     }
 }

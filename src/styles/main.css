@@ -298,10 +298,11 @@ hr.black {
 .flyer__content__date {
   top: 15px;
   right: 15px;
+  padding: 0 10px;
+  background: #000;
   position: absolute;
   font-family: "Quicksand", cursive;
   text-transform: capitalize;
-  text-shadow: 0 0 5px black, 0 0 15px black;
 }
 
 .flyer__content__metadata {
@@ -573,6 +574,10 @@ hr.black {
 .events_hero__carousel {
   width: 100%;
   display: block;
+}
+
+.events_hero__carousel .owl-stage {
+  background: black;
 }
 
 .events_hero__carousel__card {

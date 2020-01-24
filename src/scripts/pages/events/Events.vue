@@ -17,7 +17,7 @@
                 </div>
             </div>
         </section>
-        <div v-if="thisWeek.length > 0" class="events_hero">
+        <div v-if="!isMobile && thisWeek.length > 0" class="events_hero">
             <!-- <div class="events_hero__title">Esta Semana</div> -->
             <div class="events_hero__carousel">
                 <carousel

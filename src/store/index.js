@@ -134,6 +134,7 @@ export const store = new Vuex.Store({
               address_country_code: obj[key].address_country_code,
               address_city: obj[key].address_city,
               tickets: obj[key].tickets,
+              organization: obj[key].organization,
               user_id: obj[key].user_id,
               top_four: obj[key].top_four,
               is_plaza: obj[key].is_plaza,
@@ -150,39 +151,42 @@ export const store = new Vuex.Store({
         )
     },
     createEvent ({commit, getters}, payload) {
-      let event = {
-        slug: payload.slug,
-        name: payload.name,
-        email: payload.email,
-        description: payload.description,
-        event_18: payload.event_18,
-        image: payload.image,
-        price_inscription: payload.price_inscription,
-        price_public: payload.price_public,
-        date: payload.date,
-        date_init: payload.date_init,
-        date_end: payload.date_end,
-        website: payload.website,
-        address_full: payload.address_full,
-        address_lat: payload.address_lat,
-        address_long: payload.address_long,
-        address_country: payload.address_country,
-        address_country_code: payload.address_country_code,
-        address_city: payload.address_city,
-        tickets: payload.tickets,
-        user_id: payload.user_id,
-        top_four: payload.top_four,
-        is_plaza: payload.is_plaza,
-      }
-      firebase.database().ref('events').push(event)
-        .then((data) => {
-          const key = data.key
-          event.id = key
-          commit('createEvent', event)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+      if(this.getters.user){
+        let event = {
+          slug: payload.slug,
+          name: payload.name,
+          email: payload.email,
+          description: payload.description,
+          event_18: payload.event_18,
+          image: payload.image,
+          price_inscription: payload.price_inscription,
+          price_public: payload.price_public,
+          date: payload.date,
+          date_init: payload.date_init,
+          date_end: payload.date_end,
+          website: payload.website,
+          address_full: payload.address_full,
+          address_lat: payload.address_lat,
+          address_long: payload.address_long,
+          address_country: payload.address_country,
+          address_country_code: payload.address_country_code,
+          address_city: payload.address_city,
+          tickets: payload.tickets,
+          organization: payload.organization,
+          user_id: this.getters.user.id,
+          top_four: payload.top_four,
+          is_plaza: payload.is_plaza,
+        }
+        firebase.database().ref('events').push(event)
+          .then((data) => {
+            const key = data.key
+            event.id = key
+            commit('createEvent', event)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+        }
       // Reach out to firebase and store it sadf
     },
     editEvent ({commit, getters}, payload) {
@@ -319,7 +323,7 @@ export const store = new Vuex.Store({
       let date = new Date()
       const lastdayAux = date.getDate() - (date.getDay() - 1) + 7;
       const lastday = new Date(date.setDate(lastdayAux)).setHours(0, 0, 0, 0);
-      return getters.loadedEvents.filter(event => new Date(event.date) >= now && new Date(event.date).setHours(0, 0, 0, 0) < lastday);
+      return getters.loadedEvents.filter(event => new Date(event.date) >= now && new Date(event.date).setHours(0, 0, 0, 0) < lastday).sort(function() { return .5 - Math.random(); });
     },
     getNextEvents(state, getters){
       let now = new Date()
