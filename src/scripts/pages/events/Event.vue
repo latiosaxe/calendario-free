@@ -105,9 +105,9 @@
                       <span>Compartir</span>
                   </p>
 
-
                   <social-sharing v-else :url="url"
                     :title="event.title"
+                    :media="event.image" 
                     :description="event.description"
                     :quote="`CalendarioFree te invita a ${event.title}. ${event.description}`"
                     hashtags="calendariofree,freestyle"

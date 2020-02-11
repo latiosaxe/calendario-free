@@ -44,8 +44,6 @@ new Vue({
     })
     this.$store.dispatch('loadEvents')
     console.log("Running Firebase!");
-
-
     firebase.analytics();
     Vue.prototype.$analytics = firebase.analytics();
   },

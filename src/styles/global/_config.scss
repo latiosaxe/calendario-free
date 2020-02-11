@@ -63,6 +63,18 @@ hr.black{
     }
     .breadcrumb{
         margin-top: 10px;
+        ul{
+            flex-wrap: nowrap;
+            li{
+                flex-wrap: nowrap;
+                a{
+                    padding: 0 .30em;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
     }
 }
 

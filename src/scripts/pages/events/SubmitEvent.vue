@@ -87,7 +87,6 @@ export default {
           console.log("Pushing Event", this.newEvent);
           if(!this.newEvent.date){this.newEvent.date=new Date().toString();console.log("Today!")}
           this.$store.dispatch('createEvent', this.newEvent);
-          this.$router.push('/eventos');
         }
       }
     }

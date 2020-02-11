@@ -85,6 +85,13 @@ $headerHeightMobile: 60px;
                 background: #FFF;
                 top: $headerHeightMobile;
             }
+            .navbar-item.special{
+                padding: 0;
+                a{
+                    display: block;
+                    padding: .5rem .75rem;
+                }
+            }
         }
     }
     &__space{

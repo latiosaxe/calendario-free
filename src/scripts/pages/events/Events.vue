@@ -3,7 +3,7 @@
         <section class="hero is-warning">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title">Eventos esta Semana <small v-if="thisWeek.length > 0">({{thisWeek.length}})</small></h1>
+                    <h1 class="title">{{thisWeek.length}} Eventos para esta Semana</h1>
                     <h2 class="subtitle" style="margin-bottom: 0">
                         <p>Habilita <strong>tu locación</strong> para mostrarte los eventos mas cerca de ti.</p>
                     </h2>

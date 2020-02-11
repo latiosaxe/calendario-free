@@ -13,7 +13,7 @@
                         <router-link to="/eventos"><span>Eventos</span></router-link>
                     </p>
                     <p class="level-item has-text-centered">
-                        <router-link to="/fms"><span>Ascenso FMS</span></router-link>
+                        <router-link to="/fms"><span v-text="(isMobile)?'FMS':'Ascenso FMS'"></span></router-link>
                     </p>
                 </nav>
                 <ul class="header__fix__right">
@@ -31,12 +31,12 @@
                                     </a>
 
                                     <div class="navbar-dropdown">
-                                        <a v-if="user" class="navbar-item">
+                                        <div v-if="user" class="navbar-item">
                                             <router-link to="/usuario">Mi perfil</router-link> 
-                                        </a>
-                                        <a v-else class="navbar-item">
+                                        </div>
+                                        <div v-else class="navbar-item">
                                             <router-link to="/login">Ingresar</router-link> 
-                                        </a>
+                                        </div>
                                         <hr v-if="user" class="navbar-divider">
                                         <a v-if="user" class="navbar-item" @click.prevent="logout()">
                                             Salir
@@ -48,12 +48,10 @@
                     </li>
                     <li class="mobile_abolute" v-if="mobileHamburger">
                          <div class="navbar-dropdown">
-                            <a v-if="user" class="navbar-item" @click="mobileHamburger = false;">
-                                <router-link to="/usuario">Mi perfil</router-link> 
-                            </a>
-                            <a v-else class="navbar-item" @click="mobileHamburger = false;">
-                                <router-link to="/login">Ingresar</router-link> 
-                            </a>
+                            <div class="navbar-item special" @click="mobileHamburger = false;">
+                                <router-link v-if="user" to="/usuario">Mi perfil</router-link> 
+                                <router-link v-else to="/login">Ingresar</router-link> 
+                            </div>
                             <hr v-if="user" class="navbar-divider">
                             <a v-if="user" class="navbar-item" @click.prevent="mobileHamburger = false; logout()">
                                 Salir

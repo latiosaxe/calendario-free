@@ -20,7 +20,8 @@ export const store = new Vuex.Store({
     loading: false,
     error: null,
     usersLoaded:[],
-    news: []
+    news: [],
+    eventWithImage: false
   },
   mutations: {
     setLoadedNews (state, payload) {
@@ -76,6 +77,9 @@ export const store = new Vuex.Store({
     },
     createNew( state ){
       state.news.push(state);
+    },
+    eventImageUploaded(state){
+      state.eventWithImage = true;
     },
     checkUserById (state, payload){
       // console.log("CheckUserById", payload, state.usersLoaded)
@@ -151,49 +155,97 @@ export const store = new Vuex.Store({
         )
     },
     createEvent ({commit, getters}, payload) {
-      if(this.getters.user){
-        let event = {
-          slug: payload.slug,
-          name: payload.name,
-          email: payload.email,
-          description: payload.description,
-          event_18: payload.event_18,
-          image: payload.image,
-          price_inscription: payload.price_inscription,
-          price_public: payload.price_public,
-          date: payload.date,
-          date_init: payload.date_init,
-          date_end: payload.date_end,
-          website: payload.website,
-          address_full: payload.address_full,
-          address_lat: payload.address_lat,
-          address_long: payload.address_long,
-          address_country: payload.address_country,
-          address_country_code: payload.address_country_code,
-          address_city: payload.address_city,
-          tickets: payload.tickets,
-          organization: payload.organization,
-          user_id: this.getters.user.id,
-          top_four: payload.top_four,
-          is_plaza: payload.is_plaza,
-        }
-        firebase.database().ref('events').push(event)
-          .then((data) => {
-            const key = data.key
-            event.id = key
-            commit('createEvent', event)
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-        }
-      // Reach out to firebase and store it sadf
+      const user = this.getters.user;
+      if(user){
+        let fileFormat = payload.image.info.name.substr(payload.image.info.name.lastIndexOf('.') + 1);
+        const ref = firebase.storage().ref('events/'+payload.slug+'-calendariofree.'+fileFormat);
+        const task = ref.putString(payload.image.dataUrl, 'data_url')
+        task.on(
+            "state_changed",
+            function (snapshot) {},
+            function (error) {
+                reject(error)
+            },
+            function () {
+              task.snapshot.ref
+                .getDownloadURL()
+                .then(function (downloadURL) {
+                    let event = {
+                      slug: payload.slug,
+                      name: payload.name,
+                      email: payload.email,
+                      description: payload.description,
+                      event_18: payload.event_18,
+                      image: downloadURL,
+                      price_inscription: payload.price_inscription,
+                      price_public: payload.price_public,
+                      date: payload.date,
+                      date_init: payload.date_init,
+                      date_end: payload.date_end,
+                      website: payload.website,
+                      address_full: payload.address_full,
+                      address_lat: payload.address_lat,
+                      address_long: payload.address_long,
+                      address_country: payload.address_country,
+                      address_country_code: payload.address_country_code,
+                      address_city: payload.address_city,
+                      tickets: payload.tickets,
+                      organization: payload.organization,
+                      user_id: user.id,
+                      top_four: payload.top_four,
+                      is_plaza: payload.is_plaza,
+                    }
+                    firebase.database().ref('events').push(event)
+                    .then((data) => {
+                      const key = data.key
+                      event.id = key
+                      commit('createEvent', event)
+                      window.location.href = "/eventos/"+event.slug;
+                    })
+                    .catch((error) => {
+                      console.log(error)
+                    })
+                });
+            }
+        );
+
+      }
     },
     editEvent ({commit, getters}, payload) {
       let event = payload;
       Object.keys(event).forEach((key) => (event[key] == '' || event[key] == undefined) && delete event[key]); 
-      console.log( event );
-      firebase.database().ref('events/'+ payload.id).set(event)
+      console.log( "Editar Evento", event );
+      const imageString = (typeof event.image === "string") ? true : false;
+      console.log("Image String", imageString);
+      if(!imageString){
+        let fileFormat = event.image.info.name.substr(event.image.info.name.lastIndexOf('.') + 1);
+        const ref = firebase.storage().ref('events/'+event.slug+'-calendariofree.'+fileFormat);
+        const task = ref.putString(event.image.dataUrl, 'data_url')
+        task.on(
+            "state_changed",
+            function (snapshot) {},
+            function (error) {
+                reject(error)
+            },
+            function () {
+              task.snapshot.ref
+                    .getDownloadURL()
+                    .then(function (downloadURL) {
+                        event.image = downloadURL
+                        firebase.database().ref('events/'+ payload.id).set(event)
+                        .then((data) => {
+                          commit('deleteEvent', event)
+                          commit('createEvent', event)
+                          window.location.href = "/eventos/"+event.slug;
+                        })
+                        .catch((error) => {
+                          console.log(error)
+                        })
+                    });
+            }
+        );
+      }else{
+        firebase.database().ref('events/'+ payload.id).set(event)
         .then((data) => {
           commit('deleteEvent', event)
           commit('createEvent', event)
@@ -202,6 +254,7 @@ export const store = new Vuex.Store({
         .catch((error) => {
           console.log(error)
         })
+      }
       // // Reach out to firebase and store it sadf
     },
     createComment ({commit, getters}, payload) {
@@ -228,6 +281,11 @@ export const store = new Vuex.Store({
           commit('setEventComments', array)
         }
       });
+    },
+
+    uploadImage({commit, getters}, payload){
+      console.log(payload)
+      
     },
     getUserById({commit, getters}, payload){
       commit('checkUserById', payload)

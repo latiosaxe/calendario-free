@@ -30,6 +30,34 @@
             </table>
           </div>
         </div>
+        <div class="columns">
+          <div class="column">
+            <p class="title">Argentina</p>
+            <table class="table">
+              <tbody>
+                <tr v-for="(artist, index) in argentina" :key="artist.points">
+                  <td v-text="index + 1"></td>
+                  <th v-text="artist.name"></th>
+                  <td v-if="artist.city" v-text="artist.city"></td>
+                  <td v-text="artist.points"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="column">
+            <p class="title">México</p>
+             <table class="table">
+              <tbody>
+                <tr v-for="(artist, index) in mexico" :key="artist.points">
+                  <td v-text="index + 1"></td>
+                  <th v-text="artist.name"></th>
+                  <td v-if="artist.city" v-text="artist.city"></td>
+                  <td v-text="artist.points"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
         <div class="league"></div>
       </div>
     </div>
@@ -63,6 +91,23 @@ export default {
         {name: 'AIGOR', city: 'País Vasco', points: '36,160'},
         {name: 'HANDER', city: 'VALENCIA', points: '34,700'},
         {name: 'XINAKO', city: 'Barcelona', points: '30,050'},
+      ],
+      argentina:[
+        {name: 'WOLF', city: 'CAPITAL FEDERAL', points: '100,400'},
+        {name: 'MECHA', city: 'CÓRDOBA', points: '53,900'},
+        {name: 'ZAINA', city: 'BUENOS AIRES', points: '47,600'},
+        {name: 'SPEKTRO', city: 'MONTEVIDEO', points: '32,450'},
+        {name: 'PINGÜI', city: 'CHUBUT', points: '24,100'},
+        {name: 'HARRY', city: 'MALDONADO', points: '21,750'},
+        {name: 'TUQU', city: 'BUENOS AIRES', points: '21,700'},
+        {name: 'DOZER', city: 'BUENOS AIRES', points: '19,200'},
+        {name: 'ROMA', city: 'CAPITAL FEDERAL', points: '18,750'},
+        {name: 'SFJ', city: 'LAVALLEJA', points: '17,000'},
+      ],
+      mexico:[
+        {name: 'B-ONE', city: 'GUADALAJARA', points: '123,400'},
+        {name: 'SKIPER', city: 'MONTERREY', points: '113,500'},
+        {name: 'GARZA', city: 'GUADALAJARA', points: '108,500'},
       ]
     }
   }

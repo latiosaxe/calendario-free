@@ -13,9 +13,31 @@
                 <div class="field">
                   <label class="label">Imagen <span>*</span></label>
                   <div class="control">
-                    <input class="input" type="text" placeholder="http:..." v-model="event.image" required="required">
+                    <div v-if="event.image && typeof event.image === 'string'">
+                      <img :src="event.image" />
+                      <button @click.prevent="removeImage()" class="button is-warning">Eliminar Imagen</button>
+                    </div>
+
+                    <image-uploader
+                      v-else
+                      :debug="1"
+                      :maxWidth="1024"
+                      :quality="0.8"
+                      outputFormat="verbose"
+                      :preview="true"
+                      :className="['fileinput', { 'fileinput--loaded' : imageOBJ }]"
+                      :capture="false"
+                      accept="image/*"
+                      doNotResize="['gif', 'svg']"
+                      @input="uploadImage"
+                      @onUpload="startImageResize"
+                      @onComplete="endImageResize"
+                    ></image-uploader>
+                    <!-- <input type="file" @change="uploadImage" class="input"> -->
+                    <!-- <input type="text" placeholder="http:..." v-model="event.image" required="required"> -->
                   </div>
-                  <p class="help">Proximamente se podrán subir imagenes</p>
+                  <p v-if="!imageOBJ && resizeLoading">Cargando Imagen</p>
+                  <!-- <p class="help">Proximamente se podrán subir imagenes</p> -->
                 </div>
               </div>
             </div>
@@ -102,23 +124,11 @@
               </div>
             </div>
 
+            <hr>
+
             <div class="columns">
               <div class="column">
-                <div class="field">
-                  <label class="label">Precio(s)</label>
-                  <div class="control">
-                    <vue-editor v-model="event.price_public"  placeholder="Entrada General..."></vue-editor>
-                  </div>
-                </div>
-              </div>
-              <div class="column">
-                <div class="field">
-                  <label class="label">Precio inscripción</label>
-                  <div class="control">
-                    <input class="input" type="text" placeholder="$500"  v-model="event.price_inscription">
-                  </div>
-                  <p class="help">Regularmente aplica solo a plaza.</p>
-                </div>
+
                  <div class="field">
                   <div class="control">
                     <label class="checkbox">
@@ -126,6 +136,22 @@
                       ¿El Evento es de plaza?
                     </label>
                     <p class="help">Si no es de plaza se cuenta como evento de escenario.</p>
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label">Precio inscripción</label>
+                  <div class="control">
+                    <input class="input" type="text" placeholder="$500"  v-model="event.price_inscription">
+                  </div>
+                  <p class="help">Regularmente aplica solo a plaza.</p>
+                </div>
+              </div>
+
+              <div class="column">
+                <div class="field">
+                  <label class="label">Precio(s)</label>
+                  <div class="control">
+                    <vue-editor v-model="event.price_public"  placeholder="Entrada General..."></vue-editor>
                   </div>
                 </div>
               </div>
@@ -164,11 +190,12 @@
               </div>
             </div>
 
-            
+            <hr>
+            <p>Evento concluido</p>
             <div class="columns">
                 <div class="column">
                     <div class="field">
-                        <label class="label">Top 4:</label>
+                        <label class="label">¿Quienes fueron los ganadores?:</label>
                         <div class="control">
                             <vue-editor v-model="event.top_four"></vue-editor>
                         </div>
@@ -210,17 +237,19 @@
 <script>
 import Datepicker from 'vuejs-datepicker';
 import { VueEditor } from "vue2-editor";
+import ImageUploader from 'vue-image-upload-resize'
 
 export default {
     props: ['event', 'edit'],
     components: {
       Datepicker,
-      VueEditor
+      VueEditor,
+      ImageUploader
     },
     data(){
         return{
             dayStr: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-            time_init: new Date().toString(),
+            time_init: this.event.date || new Date().toString(),
             address: '',
             address_siggestions: [],
             showSuggestions: true,
@@ -234,7 +263,10 @@ export default {
                 positionFixed: true,
                 },
             },
-            isM: { isMobile: true, maxHeight: 200 }
+            isM: { isMobile: true, maxHeight: 200 },
+
+            resizeLoading: false,
+            imageOBJ: false
         }
     },
     mounted(){
@@ -244,6 +276,21 @@ export default {
         }
     },
     methods: {
+        removeImage(){
+          this.event.image = false;
+        },
+        startImageResize(){
+          this.resizeLoading = true;
+        },
+        endImageResize(){
+          this.resizeLoading = false;
+        },
+        uploadImage(e){
+          console.log(e);
+          this.imageOBJ = e
+          this.event.image = this.imageOBJ;
+          console.log("IMAGEN", this.event.image);
+        },
         dateChanged(newDate){
           this.time_init = newDate.toString();
           this.event.date = this.time_init;

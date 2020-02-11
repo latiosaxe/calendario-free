@@ -85,6 +85,20 @@ hr.black {
   .breadcrumb {
     margin-top: 10px;
   }
+  .breadcrumb ul {
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+  }
+  .breadcrumb ul li {
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+  }
+  .breadcrumb ul li a {
+    padding: 0 .30em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }
 
 .ql-toolbar .ql-formats .ql-image {
@@ -199,6 +213,15 @@ hr.black {
   position: fixed;
   background: #FFF;
   top: 60px;
+}
+
+.header__fix__right .navbar-item.special {
+  padding: 0;
+}
+
+.header__fix__right .navbar-item.special a {
+  display: block;
+  padding: .5rem .75rem;
 }
 
 .header__space {
@@ -387,6 +410,7 @@ hr.black {
   }
   .flyer:not(.slider) .flyer__content__date {
     text-shadow: none;
+    background: none;
   }
   .flyer:not(.slider):before {
     display: none;
@@ -586,7 +610,7 @@ hr.black {
 }
 
 .events_hero__carousel__card .flyer {
-  height: 350px;
+  height: 450px;
   padding-bottom: 0;
   background-size: cover;
 }
