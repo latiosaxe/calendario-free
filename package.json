@@ -15,7 +15,7 @@
     "bulma-calendar": "^6.0.7",
     "firebase": "^7.6.2",
     "firebaseui": "^4.4.0",
-    "luxon": "^1.21.3",
+    "luxon": "^2.5.2",
     "vue": "^2.6.11",
     "vue-aos": "^1.0.1",
     "vue-browser-geolocation": "^1.8.0",
